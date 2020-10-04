@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Promo Zoom ID - Sewa Zoom</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta version="v.1.0.1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+<style>
+
+.kontener {
+    display: table;
+    margin: auto;
+}
+.body {
+    display: table-cell;
+    vertical-align: middle;
+	width: 500px;
+	padding: 20px;
+	}
+
+	th, td {
+    padding: 3px;
+	padding-left: 10px;
+	text-align: left; 
+    vertical-align: middle;	
+	}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+</style>
+  </head>
+  <body>
+
+<!-- Modal -->
+<div class="modal fade" id="zoominvitation" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel" id="headerintro">Zoom Meeting Berhasil Dibuat</h5>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+  <textarea class="form-control" id="invitation" rows="6" readonly></textarea>
+  <span id="sudahcopy" style="display:none"><i>Invitation</i> sudah disalin<br><i>Host pin</i> akan diberikan paling lambat 10 menit sebelum <i>Meeting</i> dimulai</span>
+  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="copyinvitation()" id="btn1">Copy Invitation</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary" id="btn2" onclick="selesai()" style="display:none">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="konfirmasi" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel" id="headerintro">Konfirmasi</h5>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+        Apakah data yang anda isikan sudah benar? Jika password kosong maka akan dibuatkan password otomatis secara acak.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-secondary" id="btn1">Tidak</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary" id="btn2" onclick="submit()">Ya, Benar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="gaklengkap" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel" id="headerintro">Data belum lengkap</h5>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+        Isi nama meeting terlebih dahulu
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-primary">Oke</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="kontener">
+<div class="body">
+<h1 style="text-align:center">Sewa Zoom Pro Murah</h1>
+  <h3 style="text-align:center">Promo Zoom ID</h3>
+  <br>
+
+<div align="center"><h4>Detail Zoom Meeting</h4></div>
+<h6>Tanggal</h6>
+<input id="tgl" type="date" class="form-control" placeholder="Contoh : 2020-08-25" readonly><span style="font-size:75%">Format : dd/mm/yyyy</span><br>
+<div class="row g-3 align-items-center">
+  <div class="col-auto" style="width:50%">
+	<h6>Jam</h6>
+    <input id="jam" type="text" class="form-control"placeholder="" readonly><br>
+  </div>
+  <div class="col-auto" style="width:50%">
+	<h6>Durasi</h6>
+	<div class="input-group flex-nowarp">
+    <input id="durasi" type="number" class="form-control" placeholder="" readonly>
+	<span class="input-group-text" id="addon-wrapping">Jam</span>
+	</div><br>
+  </div>
+</div>
+<h6>Pilihan Kapasitas <i>(Participants)</i></h6>
+<table>
+<tr><td>
+<div class="form-check">
+		<input class="form-check-input" type="radio" name="tipe" id="100" disabled>
+		<label class="form-check-label" for="100">
+		100
+		</label>
+	</div></td>
+<td>
+	<div class="form-check">
+		<input class="form-check-input" type="radio" name="tipe" id="300" disabled>
+		<label class="form-check-label" for="300">
+		300
+		</label>
+	</div>
+	</td>
+<td>
+	<div class="form-check">
+		<input class="form-check-input" type="radio" name="tipe" id="500" disabled>
+		<label class="form-check-label" for="500">
+		500
+		</label>
+	</div>
+	</td>
+</tr>
+</table><br>
+<h6>Nama Meeting</h6>
+<input id="meeting" type="text" class="form-control" placeholder="Contoh : Zoom Meeting"><br>
+<h6>Deskripsi (opsional)</h6>
+<textarea class="form-control" placeholder="Isikan deskripsi meeting" id="desc" rows="3"></textarea><br>
+<h6>Password Zoom Meeting</h6>
+<input id="pass" type="text" class="form-control"placeholder="Maksimal 10 karakter" maxlength=10><br>
+<br>
+<div align="center">
+<button type="button" id="next" class="btn btn-primary" onclick="konfirmasi()">Jadwalkan</button>
+<button id="load" class="btn btn-primari" type="button" style="display : none;" disabled>
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  Processing...
+</button>
+</div>
+<script>
+function awal() {
+if (sessionStorage.getItem("new") != null) {
+document.getElementById("tgl").value = sessionStorage.getItem("tgl")
+document.getElementById("jam").value = sessionStorage.getItem("jam")
+document.getElementById("durasi").value = sessionStorage.getItem("durasi")
+var tipe = sessionStorage.getItem("tipe")
+document.getElementById(tipe).checked = true
+sessionStorage.removeItem("new")}
+else {location.href = "buatroom.html"}
+}
+function konfirmasi(){
+var tgl = document.getElementById("tgl").value.toString()
+var jam = document.getElementById("jam").value.toString()
+var mulai = tgl+"T"+jam+":00"
+if (document.getElementById("meeting").value == ""){
+var myModal = new bootstrap.Modal(document.getElementById("gaklengkap"), {});
+myModal.show();
+}
+else {
+var myModal = new bootstrap.Modal(document.getElementById("konfirmasi"), {backdrop:'static',keyboard:false});
+    myModal.show();
+    }
+}
+function submit(){
+document.getElementById("load").style.display = "block"
+document.getElementById("next").style.display = "none"
+var wa = sessionStorage.getItem("wa")
+var meeting = document.getElementById("meeting").value.toString()
+var desc = document.getElementById("desc").value.toString()
+var pass = document.getElementById("pass").value.toString()
+var tgl = document.getElementById("tgl").value.toString()
+var jam = document.getElementById("jam").value.toString()
+var durasi = parseInt(document.getElementById("durasi").value)*60
+var tipe = sessionStorage.getItem("tipe")
+sessionStorage.setItem("wa",wa)
+sessionStorage.setItem("tgl",tgl)
+sessionStorage.setItem("jam",jam)
+sessionStorage.setItem("durasi",durasi/60)
+var mulai = tgl+"T"+jam+":00"
+var param = [wa,tipe,meeting,desc,pass,mulai,durasi]
+alert(param)
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=zoom&data="+param, {
+   'method' : 'get'}).then(function(response) {
+    return response.text().then(function(text) {
+	alert(text)
+	var e = text.split(";")
+document.getElementById("next").style.display = "none"
+document.getElementById("invitation").value = e[0]
+var myModal = new bootstrap.Modal(document.getElementById("zoominvitation"), {backdrop:'static',keyboard:false});
+    myModal.show();
+sessionStorage.setItem("IDmeeting",e[1])
+})})
+}
+function showinvitation(e) {
+document.getElementById("next").style.display = "none"
+document.getElementById("invitation").value = e[0]
+var myModal = new bootstrap.Modal(document.getElementById("zoominvitation"), {backdrop:'static',keyboard:false});
+    myModal.show();
+sessionStorage.setItem("IDmeeting",e[1])
+}
+function copyinvitation() {
+var el = document.createElement('textarea');
+  el.value = document.getElementById("invitation").value;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+  document.getElementById("sudahcopy").style.display = "block"
+  document.getElementById("btn1").style.display = "none"
+  document.getElementById("btn2").style.display = "block"
+}
+function selesai(){
+var param = [sessionStorage.getItem("IDmeeting"),sessionStorage.getItem("tipe")]
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getUrl&data="+param, {
+  'method' : 'get'}).then(function(response) {
+    return response.text().then(function(text) {
+	alert(text)
+	var e = text.split(",")
+	sessionStorage.setItem("url",e[0])
+	if (e[1] == null){e[1]=""}
+	sessionStorage.setItem("password",e[1])
+	sessionStorage.setItem("topic",e[2])
+	sessionStorage.setItem("agenda",e[3])
+	sessionStorage.setItem("lihat","Ya")
+	location.href = "zoomview.html"
+	})})
+}
+function lama(e){
+sessionStorage.setItem("url",e[0])
+if (e[1] == null){e[1]=""}
+sessionStorage.setItem("password",e[1])
+sessionStorage.setItem("topic",e[2])
+sessionStorage.setItem("agenda",e[3])
+location.href = "zoomview.html"
+}
+function toast() {
+var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function(toastEl) {
+        // Creates an array of toasts (it only initializes them)
+          return new bootstrap.Toast(toastEl) // No need for options; use the default options
+        });
+       toastList.forEach(toast => toast.show()); // This show them
+   
+        console.log(toastList); // Testing to see if it works
+        }
+document.addEventListener("DOMContentLoaded", awal);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  </body>
+</html>

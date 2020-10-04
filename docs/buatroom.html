@@ -1,51 +1,225 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Zoom Admin</title>
+  <head>
+    <title>Promo Zoom ID - Sewa Zoom</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="favicon.ico" sizes="16x16">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 <meta version="v.1.0.1">
-<style type="text/css"> 
-        html { 
-            overflow: auto; 
-        } 
-          
-        html, 
-        body, 
-        div, 
-        iframe { 
-            margin: 0px; 
-            padding: 0px; 
-            height: 100%; 
-            border: none; 
-        } 
-          
-        iframe { 
-            display: block; 
-            width: 100%; 
-            border: none; 
-            overflow-y: auto; 
-            overflow-x: hidden; 
-        } 
-		.dropdown-item:focus{background-color: #c2a259}
-.dropdown-item:active{background-color: #dbad42}
-.dropdown-item.active {background-color: #f5bc38}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+<style>
 
-    </style>
-	</head>
-<body>
+.kontener {
+    display: table;
+    margin: auto;
+}
+.body {
+    display: table-cell;
+    vertical-align: middle;
+	width: 500px;
+	padding: 20px;
+	}
 
-<iframe src="https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?"
-    frameborder="0" 
-    marginheight="0" 
-    marginwidth="0" 
-    width="100%" 
-    height="100%" 
-    scrolling="auto"></iframe >
+	th, td {
+    padding: 3px;
+	padding-left: 10px;
+	text-align: left; 
+    vertical-align: middle;	
+	}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+</style>
+  </head>
+  <body>
+
+<!-- Modal -->
+<div class="modal fade" id="gaadaWA" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel" id="headerintro">Sewa Zoom Pro</h5>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+        Nomor <i>Whatsapp</i> tidak ditemukan dalam data pelanggan kami.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-primary" id="btn1">Oke</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="konfirmasi" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel" id="headerintro">Konfirmasi</h5>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+        Apakah data yang anda isikan sudah benar?
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-secondary" id="btn1">Tidak</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary" id="btn2" onclick="submit()">Ya, Benar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="kontener">
+<div class="body">
+<h1 style="text-align:center">Sewa Zoom Pro Murah</h1>
+  <h3 style="text-align:center">Promo Zoom ID</h3>
+  <br>
+
+<h6>Nomor <i>Whatsapp</i></h6>
+<input id="wa" type="number" class="form-control" placeholder="Masukkan nomor whatsapp anda"><br>
+<div align="center">
+<button type="button" id="next" class="btn btn-primary" onclick="next()">Lanjutkan</button>
+<button id="load" class="btn btn-primari" type="button" style="display : none;" disabled>
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  Processing...
+</button>
+</div>
+<script>
+alert("awa")
+function next(){
+document.getElementById("load").style.display = "block"
+document.getElementById("next").style.display = "none"
+var param = document.getElementById("wa").value
+alert(param)
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=masuk&data="+param, {
+   'method' : 'get'}).then(function(response) {
+    return response.text().then(function(text) {
+	alert(text)
+	text = text.split(",")
+	alert(text[0])
+	if ( text=="Gaada" || text[6] < 0){
+  var myModal = new bootstrap.Modal(document.getElementById("gaadaWA"), {backdrop:'static',keyboard:false});
+    myModal.show();
+    document.getElementById("load").style.display = "none"
+    document.getElementById("next").style.display = "block"
+}
+else{
+sessionStorage.setItem("wa",text[0])
+sessionStorage.setItem("tgl",text[1])
+sessionStorage.setItem("jam",text[2])
+sessionStorage.setItem("durasi",text[3])
+sessionStorage.setItem("IDmeeting",text[4])
+sessionStorage.setItem("tipe",text[5])
+sessionStorage.setItem("new","ya")
+if (text[4] != "") {
+var param = [text[4],text[5]]
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getUrl&data="+param, {
+  'method' : 'get'}).then(function(response) {
+    return response.text().then(function(text) {
+	var e = text.split(",")
+	sessionStorage.setItem("url",e[0])
+	if (e[1] == null){e[1]=""}
+	sessionStorage.setItem("password",e[1])
+	sessionStorage.setItem("topic",e[2])
+	sessionStorage.setItem("agenda",e[3])
+	alert("dahada")
+	sessionStorage.setItem("lihat","Ya")
+	location.href = "zoomview.html"})})}
+else{
+alert("bikin")
+location.href = "zoom.html"
+}
+}
+})})
+}
+function hasilWA(e){
+if ( e==null ){
+  var myModal = new bootstrap.Modal(document.getElementById("gaadaWA"), {backdrop:'static',keyboard:false});
+    myModal.show();
+    document.getElementById("load").style.display = "none"
+    document.getElementById("next").style.display = "block"
+}
+else{
+sessionStorage.setItem("wa",e[0])
+sessionStorage.setItem("tgl",e[1])
+sessionStorage.setItem("jam",e[2])
+sessionStorage.setItem("durasi",e[3])
+sessionStorage.setItem("IDmeeting",e[4])
+sessionStorage.setItem("tipe",e[5])
+if (e[4] != "") {
+google.script.run.withSuccessHandler(lama).getUrl(e[4],e[5])}
+else{
+google.script.run.withSuccessHandler(refreshApp).reload("zoom100")}
+}
+}
+function lama(e){
+sessionStorage.setItem("url",e[0])
+if (e[1] == null){e[1]=""}
+sessionStorage.setItem("password",e[1])
+sessionStorage.setItem("topic",e[2])
+sessionStorage.setItem("agenda",e[3])
+google.script.run.withSuccessHandler(refreshApp).reload("zoom100view")
+}
+function konfirmasi(){
+var myModal = new bootstrap.Modal(document.getElementById("konfirmasi"), {backdrop:'static',keyboard:false});
+    myModal.show();
+}
+function submit(){
+document.getElementById("load").style.display = "block"
+document.getElementById("next").style.display = "none"
+var meeting = document.getElementById("meeting").value.toString()
+var desc = document.getElementById("desc").value.toString()
+var pass = document.getElementById("pass").value.toString()
+var tgl = document.getElementById("tgl").value.toString()
+var jam = document.getElementById("jam").value.toString()
+var mulai = tgl+"T"+jam+":00"
+var durasi = parseInt(document.getElementById("durasi").value)*60
+google.script.run.withSuccessHandler(showinvitation).zoom([meeting,desc,pass,mulai,durasi])
+}
+function showinvitation(e) {
+document.getElementById("next").style.display = "none"
+document.getElementById("invitation").value = e
+var myModal = new bootstrap.Modal(document.getElementById("zoominvitation"), {backdrop:'static',keyboard:false});
+    myModal.show();
+}
+function copyinvitation() {
+var el = document.createElement('textarea');
+  el.value = document.getElementById("invitation").value;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+  document.getElementById("sudahcopy").style.display = "block"
+  document.getElementById("btn1").style.display = "none"
+  document.getElementById("btn2").style.display = "block"
+}
+function toast() {
+var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function(toastEl) {
+        // Creates an array of toasts (it only initializes them)
+          return new bootstrap.Toast(toastEl) // No need for options; use the default options
+        });
+       toastList.forEach(toast => toast.show()); // This show them
+   
+        console.log(toastList); // Testing to see if it works
+        }
+function refreshApp(newHtml) {
+    document.open();
+    document.write(newHtml)
+    document.close();
+  }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
-</body>
-<script>
-</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  </body>
 </html>
