@@ -92,18 +92,14 @@
 </button>
 </div>
 <script>
-alert("awa")
 function next(){
 document.getElementById("load").style.display = "block"
 document.getElementById("next").style.display = "none"
 var param = document.getElementById("wa").value
-alert(param)
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=masuk&data="+param, {
    'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {
-	alert(text)
 	text = text.split(",")
-	alert(text[0])
 	if ( text=="Gaada" || text[6] < 0){
   var myModal = new bootstrap.Modal(document.getElementById("gaadaWA"), {backdrop:'static',keyboard:false});
     myModal.show();
@@ -129,11 +125,9 @@ fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMo
 	sessionStorage.setItem("password",e[1])
 	sessionStorage.setItem("topic",e[2])
 	sessionStorage.setItem("agenda",e[3])
-	alert("dahada")
 	sessionStorage.setItem("lihat","Ya")
 	location.href = "zoomview.html"})})}
 else{
-alert("bikin")
 location.href = "zoom.html"
 }
 }
@@ -192,7 +186,7 @@ var myModal = new bootstrap.Modal(document.getElementById("zoominvitation"), {ba
 function copyinvitation() {
 var el = document.createElement('textarea');
   el.value = document.getElementById("invitation").value;
-  document.body.appendChild(el);
+  document.getElementById("zoominvitation").appendChild(el);
   el.select();
   document.execCommand('copy');
   document.body.removeChild(el);

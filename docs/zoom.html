@@ -201,11 +201,9 @@ sessionStorage.setItem("jam",jam)
 sessionStorage.setItem("durasi",durasi/60)
 var mulai = tgl+"T"+jam+":00"
 var param = [wa,tipe,meeting,desc,pass,mulai,durasi]
-alert(param)
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=zoom&data="+param, {
    'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {
-	alert(text)
 	var e = text.split(";")
 document.getElementById("next").style.display = "none"
 document.getElementById("invitation").value = e[0]
@@ -224,7 +222,7 @@ sessionStorage.setItem("IDmeeting",e[1])
 function copyinvitation() {
 var el = document.createElement('textarea');
   el.value = document.getElementById("invitation").value;
-  document.body.appendChild(el);
+  document.getElementById("zoominvitation").appendChild(el);
   el.select();
   document.execCommand('copy');
   document.body.removeChild(el);
@@ -237,7 +235,6 @@ var param = [sessionStorage.getItem("IDmeeting"),sessionStorage.getItem("tipe")]
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getUrl&data="+param, {
   'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {
-	alert(text)
 	var e = text.split(",")
 	sessionStorage.setItem("url",e[0])
 	if (e[1] == null){e[1]=""}
