@@ -200,7 +200,7 @@ sessionStorage.setItem("tgl",tgl)
 sessionStorage.setItem("jam",jam)
 sessionStorage.setItem("durasi",durasi/60)
 var mulai = tgl+"T"+jam+":00"
-var param = [wa,tipe,meeting,desc,pass,mulai,durasi]
+var param = wa+"|"+tipe+"|"+meeting+"|"+desc+"|"+pass+"|"+mulai+"|"+durasi
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=zoom&data="+param, {
    'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {
