@@ -46,12 +46,12 @@
       <div class="modal-body">
         <div class="mb-3">
   <textarea class="form-control" id="invitation" rows="6" readonly></textarea>
-  <span id="sudahcopy" style="display:none"><i>Invitation</i> sudah disalin<br><i>Host pin</i> akan diberikan paling lambat 10 menit sebelum <i>Meeting</i> dimulai</span>
+  <span id="sudahcopy"><i>Host pin</i> akan diberikan paling lambat 10 menit sebelum <i>Meeting</i> dimulai</span>
   </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="copyinvitation()" id="btn1">Copy Invitation</button>
-        <button type="button" data-dismiss="modal" class="btn btn-primary" id="btn2" onclick="selesai()" style="display:none">Done</button>
+        <button type="button" class="btn btn-secondary" onclick="copyinvitation()" id="btn1" style="display:none">Copy Invitation</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary" id="btn2" onclick="selesai()">Done</button>
       </div>
     </div>
   </div>
@@ -222,7 +222,7 @@ sessionStorage.setItem("IDmeeting",e[1])
 function copyinvitation() {
 var el = document.createElement('textarea');
   el.value = document.getElementById("invitation").value;
-  document.getElementById("zoominvitation").appendChild(el);
+  document.body.appendChild(el);
   el.select();
   document.execCommand('copy');
   document.body.removeChild(el);
