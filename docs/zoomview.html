@@ -159,7 +159,8 @@
 <h6>URL Meeting</h6>
 <textarea class="form-control" id="url" rows="5" readonly></textarea><br>
 <div align="center">
-<button type="button" id="btnhostkey" class="btn btn-secondary" onclick="gethostkey()" style="display : none;" >Host Key</button>
+<button type="button" id="btnhostkey" class="btn btn-secondary" onclick="gethostkey()" disabled >Host Key</button><br>
+Hostkey dapat diakses 15 menit sebelum zoom meeting dimulai
 <button id="loadhostkey" class="btn btn-secondary" type="button" style="display : none;" disabled>
   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
   Processing...
@@ -216,7 +217,7 @@ var reserv = new Date(tanggal[0],parseInt(tanggal[1])-1,tanggal[2],hour,min)
 var reserv2 = new Date(now.getFullYear(),now.getMonth(),now.getDate(),hournow,minnow)
 var n = reserv.getTime() - reserv2.getTime()
 if ( n <= 900000 ) {
-document.getElementById("btnhostkey").style.display = "block"
+document.getElementById("btnhostkey").disabled = false
 }
 sessionStorage.removeItem("lihat")
 }
