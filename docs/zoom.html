@@ -147,11 +147,11 @@
 </tr>
 </table><br>
 <h6>Nama Meeting</h6>
-<input id="meeting" type="text" class="form-control" placeholder="Contoh : Zoom Meeting"><br>
+<input id="meeting" type="text" class="form-control" placeholder="Contoh : Zoom Meeting" onkeydown="myFunction(event,this)" onkeyup="myFunction2(event,this)"><br>
 <h6>Deskripsi (opsional)</h6>
-<textarea class="form-control" placeholder="Isikan deskripsi meeting" id="desc" rows="3"></textarea><br>
+<textarea class="form-control" placeholder="Isikan deskripsi meeting" id="desc" rows="3"  onkeydown="myFunction(event,this)" onkeyup="myFunction2(event,this)"></textarea><br>
 <h6>Password Zoom Meeting</h6>
-<input id="pass" type="text" class="form-control"placeholder="Maksimal 10 karakter" maxlength=10><br>
+<input id="pass" type="text" class="form-control"placeholder="Maksimal 10 karakter" maxlength=10 onkeydown="myFunction(event,this)" onkeyup="myFunction2(event,this)"><br>
 <br>
 <div align="center">
 <button type="button" id="next" class="btn btn-primary" onclick="konfirmasi()">Jadwalkan</button>
@@ -161,6 +161,7 @@
 </button>
 </div>
 <script>
+alert("test")
 function awal() {
 if (sessionStorage.getItem("new") != null) {
 document.getElementById("tgl").value = sessionStorage.getItem("tgl")
@@ -252,6 +253,16 @@ sessionStorage.setItem("password",e[1])
 sessionStorage.setItem("topic",e[2])
 sessionStorage.setItem("agenda",e[3])
 location.href = "zoomview.html"
+}
+function myFunction(event,apa) {
+  var x = event.which || event.keyCode;
+  if (x == 220 && event.shiftKey == true){
+  hasil = apa.value.trimEnd()}
+}
+function myFunction2(event,apa) {
+  var x = event.which || event.keyCode;
+  if (x == 220 && event.shiftKey == true){
+  apa.value = hasil}
 }
 function toast() {
 var toastElList = [].slice.call(document.querySelectorAll('.toast'))

@@ -87,7 +87,7 @@
       <div class="modal-body">
         <div class="mb-3">
         <table>
-        <tr><td>Host Key :</td>
+        <tr><td>Host Key:</td>
         <td><input type="text" class="form-control" id="txthostkey" readonly></td></tr>
         </table>
       </div>
@@ -151,7 +151,7 @@
 <h6>Nama Meeting</h6>
 <input id="meeting" type="text" class="form-control"readonly><br>
 <h6>Deskripsi (opsional)</i></h6>
-<input id="desc" type="text" class="form-control" readonly><br>
+<textarea class="form-control" id="desc" rows="3" readonly></textarea><br>
 <h6>ID Meeting</i></h6>
 <input id="IDmeeting" type="text" class="form-control"readonly><br>
 <h6>Password Zoom Meeting</h6>
@@ -216,7 +216,7 @@ var reserv = new Date(tanggal[0],parseInt(tanggal[1])-1,tanggal[2],hour,min)
 var reserv2 = new Date(now.getFullYear(),now.getMonth(),now.getDate(),hournow,minnow)
 var n = reserv.getTime() - reserv2.getTime()
 if ( n <= 900000 ) {
-document.getElementById("btnhostkey").style.display = "block"
+document.getElementById("btnhostkey").disabled = true
 }
 sessionStorage.removeItem("lihat")
 }
