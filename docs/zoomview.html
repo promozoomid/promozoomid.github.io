@@ -216,7 +216,7 @@ var reserv = new Date(tanggal[0],parseInt(tanggal[1])-1,tanggal[2],hour,min)
 var reserv2 = new Date(now.getFullYear(),now.getMonth(),now.getDate(),hournow,minnow)
 var n = reserv.getTime() - reserv2.getTime()
 if ( n <= 900000 ) {
-document.getElementById("btnhostkey").disabled = true
+document.getElementById("btnhostkey").style.display = "block"
 }
 sessionStorage.removeItem("lihat")
 }
