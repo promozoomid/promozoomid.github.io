@@ -161,15 +161,13 @@
 <h6>URL Meeting</h6>
 <textarea class="form-control" id="url" rows="5" readonly></textarea><br>
 <div align="center">
-
 <button type="button" id="btnhostkey" class="btn btn-secondary" onclick="gethostkey()" disabled>Host Key
 </button>
-<button id="loadhostkey" class="btn btn-secondary" type="button" style="display : none;" >
+<button id="loadhostkey" class="btn btn-secondary" type="button" style="display : none;" disabled>
   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
   Processing...
 </button>
-<br>
-Hostkey dapat diakses 15 menit sebelum zoom meeting dimulai
+<br>Hostkey dapat diakses 15 menit sebelum zoom meeting dimulai
 <br>
 <br>
 <table>
@@ -197,11 +195,7 @@ Hostkey dapat diakses 15 menit sebelum zoom meeting dimulai
 
 <script>
 function awal() {
-var skr = new Date()
-skr = skr.getTime()
-if (localStorage.getItem("lihat") != null && (skr < parseInt(localStorage.getItem("expired")) || sessionStorage.getItem("baru") != null)){
-sessionStorage.removeItem("baru")
-if (sessionStorage.getItem("tgl") != null){
+if (sessionStorage.getItem("lihat") != null){
 document.getElementById("tgl").value = sessionStorage.getItem("tgl")
 document.getElementById("jam").value = sessionStorage.getItem("jam")
 document.getElementById("durasi").value = sessionStorage.getItem("durasi")
@@ -213,8 +207,7 @@ document.getElementById("pass").value = sessionStorage.getItem("password")
 document.getElementById("pengundang").value = sessionStorage.getItem("pengundang")
 var tipe = sessionStorage.getItem("tipe")
 document.getElementById(tipe).checked = true
-var wa = sessionStorage.getItem("wa")
-sessionStorage.setItem("wa",wa)
+sessionStorage.clear()
 sessionStorage.setItem("IDmeeting",document.getElementById("IDmeeting").value)
 var pesan = document.getElementById("jam").value.split(":")
 var tanggal = document.getElementById("tgl").value.split("-")
@@ -231,9 +224,9 @@ var n = reserv.getTime() - reserv2.getTime()
 if ( n <= 900000 ) {
 document.getElementById("btnhostkey").disabled = false
 }
+sessionStorage.removeItem("lihat")
 }
-else {back()}
-}else {back()}
+else {location.href = "buatroom.html"}
 }
 function gethostkey(){
 document.getElementById("btnhostkey").style.display = "none"
@@ -266,10 +259,7 @@ var myModal = new bootstrap.Modal(document.getElementById("konfirmasi"), {backdr
 function back() {
 document.getElementById("loadback").style.display = "block"
 document.getElementById("back").style.display = "none"
-if (localStorage.getItem("index") != null) {
-location.href = "zoomlist.html"
-}
-else {location.href = "buatroom.html"}
+location.href = "buatroom.html"
 }
 function invitation() {
 document.getElementById("loadinvite").style.display = "block"

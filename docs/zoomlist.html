@@ -82,30 +82,135 @@
   <h3 style="text-align:center">Promo Zoom ID</h3>
   <br>
 
-<h6>Nomor <i>Whatsapp</i></h6>
-<input id="wa" type="number" class="form-control" placeholder="Masukkan nomor whatsapp anda"><br>
+<h4 style="text-align:center">Daftar Booking Zoom</h4>
+
+<table class="table table bordered table-striped" style="margin-left:auto;margin-right:auto">
+  <thead>
+	<tr style="text-align:center">
+		<th>Tanggal</th>
+		<th>Jam</th>
+		<th>Durasi</th>
+		<th>Topic</th>
+		<th style="text-align:center"></th>
+	</tr>
+  </thead>
+  <tbody id="table-body">
+  
+  </tbody>
+  </table>
+<br>
 <div align="center">
-<button type="button" id="next" class="btn btn-primary" onclick="next()">Lanjutkan</button>
-<button id="load" class="btn btn-primari" type="button" style="display : none;" disabled>
+<button type="button" id="btnback" class="btn btn-secondary" onclick="back()">Keluar</button>
+<button id="loadback" class="btn btn-secondary" type="button" style="display : none;" disabled>
   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
   Processing...
 </button>
 </div>
 <script>
-localStorage.removeItem("expired")
-localStorage.removeItem("hasil")
-localStorage.removeItem("wa")
-localStorage.removeItem("index")
+sessionStorage.setItem("Versi","3")
+function awal(){
 localStorage.removeItem("new")
 localStorage.removeItem("lihat")
 sessionStorage.clear()
-sessionStorage.setItem("Versi","3")
+var skr = new Date()
+skr = skr.getTime()
+if (skr < parseInt(localStorage.getItem("expired"))){
+var param = localStorage.getItem("wa")
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=test&data="+param, {
+   'method' : 'get'}).then(function(response) {
+    return response.text().then(function(hasil) {
+	text = hasil.split("|") 
+localStorage.setItem("hasil",hasil)
+var body = document.getElementById("table-body")
+var induk = localStorage.getItem("hasil")
+induk = induk.split("|")
+induk.forEach(function(x){
+var y = x.split(",")
+var row = document.createElement("tr");
+var col1 = document.createElement("td");
+col1.innerHTML = y[2];
+var col2 = document.createElement("td");
+col2.innerHTML = y[3]
+var col3 = document.createElement("td");
+col3.innerHTML = y[4] +" Jam"
+var col4 = document.createElement("td");
+col4.innerHTML = y[8]
+var col5 = document.createElement("td");
+var loading = "load"+y[0].toString()
+if ( y[8] == ""){col5.innerHTML = '<button type="button" id="'+y[0]+'" tipe="'+y[6]+'" tgl="'+y[2]+'" jam="'+y[3]+'" durasi="'+y[4]+'" onclick="buat(this)" class="btn btn-primary">Buat</button><button class="btn btn-primary" id="load'+y[0]+'" type="button" style="display : none;" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>'}
+else {col5.innerHTML = '<button type="button" id="'+y[0]+'" tipe="'+y[6]+'" onclick="lihat(this)" class="btn btn-secondary">Lihat</button><button class="btn btn-secondary" id="'+loading+'" type="button" style="display : none;" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>'}
+row.appendChild(col1);
+row.appendChild(col2);
+row.appendChild(col3);
+row.appendChild(col4);
+row.appendChild(col5);
+body.appendChild(row);
+})})})
+localStorage.setItem("index","ya")
+localStorage.removeItem("new")
+localStorage.removeItem("lihat")
+}
+else {location.href = "buatroom.html"}
+}
+function lihat(apa){
+var tombol = document.getElementsByTagName("button")
+for ( var i=0;i<tombol.length;i++ ){
+tombol[i].disabled = true
+}
+var id = apa.getAttribute("id")
+var loader = "load"+id.toString()
+apa.style.display = "none"
+document.getElementById(loader).style.display = "table-cell"
+var tipe = apa.getAttribute("tipe")
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=cariID&data="+id, {
+   'method' : 'get'}).then(function(response) {
+    return response.text().then(function(hasil) {
+text = hasil.split(",")
+sessionStorage.setItem("ID",text[0])
+sessionStorage.setItem("tgl",text[2])
+sessionStorage.setItem("jam",text[3])
+sessionStorage.setItem("durasi",text[4])
+sessionStorage.setItem("IDmeeting",text[5])
+sessionStorage.setItem("tipe",text[6])
+sessionStorage.setItem("pengundang",text[7])
+localStorage.setItem("lihat","ya")
+var param2 = [text[5],tipe]
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getUrl&data="+param2, {
+  'method' : 'get'}).then(function(response) {
+    return response.text().then(function(text) {
+	var e = text.split("|")
+	sessionStorage.setItem("url",e[0])
+	if (e[1] == "undefined"){e[1]=""}
+	sessionStorage.setItem("password",e[1])
+	sessionStorage.setItem("topic",e[2])
+	sessionStorage.setItem("agenda",e[3])
+	sessionStorage.setItem("lihat","Ya")
+	location.href = "zoomview.html"
+	})})
+	})})
+}
+function buat(apa){
+var tombol = document.getElementsByTagName("button")
+for ( var i=0;i<tombol.length;i++ ){
+tombol[i].disabled = true
+}
+var id = apa.getAttribute("id")
+var loader = "load"+id.toString()
+apa.style.display = "none"
+localStorage.setItem("new","ya")
+document.getElementById(loader).style.display = "table-cell"
+sessionStorage.setItem("ID",apa.getAttribute("id"))
+sessionStorage.setItem("tgl",apa.getAttribute("tgl"))
+sessionStorage.setItem("jam",apa.getAttribute("jam"))
+sessionStorage.setItem("durasi",apa.getAttribute("durasi"))
+sessionStorage.setItem("tipe",apa.getAttribute("tipe"))
+location.href="zoom.html"
+}
 function next(){
 document.getElementById("load").style.display = "block"
 document.getElementById("next").style.display = "none"
-localStorage.setItem("wa",document.getElementById("wa").value)
 var param = document.getElementById("wa").value
-fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=test&data="+param, {
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=masuk&data="+param, {
    'method' : 'get'}).then(function(response) {
     return response.text().then(function(hasil) {
 	text = hasil.split("|") 
@@ -116,14 +221,11 @@ fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMo
     document.getElementById("next").style.display = "block"
 }
 else if( text.length > 1){
-var tgl = new Date()
-tgl.setMinutes(tgl.getMinutes() + 1)
-localStorage.setItem("expired",tgl.getTime())
-localStorage.setItem("hasil",hasil)
+sessionStorage.setItem("hasil",hasil)
 location.href = "zoomlist.html"
 }
 else{
-text = hasil.split(",")
+text = text.split(",")
 sessionStorage.setItem("ID",text[0])
 sessionStorage.setItem("wa",text[1])
 sessionStorage.setItem("tgl",text[2])
@@ -133,8 +235,8 @@ sessionStorage.setItem("IDmeeting",text[5])
 sessionStorage.setItem("tipe",text[6])
 sessionStorage.setItem("pengundang",text[7])
 sessionStorage.setItem("new","ya")
-if (text[5] != "") {
-var param = [text[5],text[6]]
+if (text[4] != "") {
+var param = [text[4],text[5]]
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getUrl&data="+param, {
   'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {
@@ -144,16 +246,9 @@ fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMo
 	sessionStorage.setItem("password",e[1])
 	sessionStorage.setItem("topic",e[2])
 	sessionStorage.setItem("agenda",e[3])
-	localStorage.setItem("lihat","Ya")
-	location.href = "zoomview.html"
-	var tgl = new Date()
-	tgl.setMinutes(tgl.getMinutes() + 1)
-	localStorage.setItem("expired",tgl.getTime())})})}
+	sessionStorage.setItem("lihat","Ya")
+	location.href = "zoomview.html"})})}
 else{
-var tgl = new Date()
-tgl.setMinutes(tgl.getMinutes() + 1)
-localStorage.setItem("expired",tgl.getTime())
-localStorage.setItem("new","ya")
 location.href = "zoom.html"
 }
 }
@@ -203,11 +298,10 @@ var mulai = tgl+"T"+jam+":00"
 var durasi = parseInt(document.getElementById("durasi").value)*60
 google.script.run.withSuccessHandler(showinvitation).zoom([meeting,desc,pass,mulai,durasi])
 }
-function showinvitation(e) {
-document.getElementById("next").style.display = "none"
-document.getElementById("invitation").value = e
-var myModal = new bootstrap.Modal(document.getElementById("zoominvitation"), {backdrop:'static',keyboard:false});
-    myModal.show();
+function back() {
+document.getElementById("loadback").style.display = "block"
+document.getElementById("btnback").style.display = "none"
+location.href = "buatroom.html"
 }
 function copyinvitation() {
 var el = document.createElement('textarea');
@@ -235,6 +329,7 @@ function refreshApp(newHtml) {
     document.write(newHtml)
     document.close();
   }
+  document.addEventListener("DOMContentLoaded", awal);
 </script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
