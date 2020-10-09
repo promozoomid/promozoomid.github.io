@@ -146,7 +146,9 @@
 	</td>
 </tr>
 </table><br>
-<h6>Nama Meeting</h6>
+<h6>Nama Pembuat Meeting</h6>
+<input id="pengundang" type="text" class="form-control" placeholder="Contoh : Zoom Meeting" onkeydown="myFunction(event,this)" onkeyup="myFunction2(event,this)" value="Zoom"><div style="font-size:85%"><i>"<span id="tekspengundang">Zoom</span> is inviting you to a scheduled Zoom meeting..."</i></div><br>
+<h6>Nama Meeting <i>(Topic)</i></h6>
 <input id="meeting" type="text" class="form-control" placeholder="Contoh : Zoom Meeting" onkeydown="myFunction(event,this)" onkeyup="myFunction2(event,this)"><br>
 <h6>Deskripsi (opsional)</h6>
 <textarea class="form-control" placeholder="Isikan deskripsi meeting" id="desc" rows="3"  onkeydown="myFunction(event,this)" onkeyup="myFunction2(event,this)"></textarea><br>
@@ -194,13 +196,15 @@ var pass = document.getElementById("pass").value.toString()
 var tgl = document.getElementById("tgl").value.toString()
 var jam = document.getElementById("jam").value.toString()
 var durasi = parseInt(document.getElementById("durasi").value)*60
+var pengundang = document.getElementById("pengundang").value
 var tipe = sessionStorage.getItem("tipe")
 sessionStorage.setItem("wa",wa)
 sessionStorage.setItem("tgl",tgl)
 sessionStorage.setItem("jam",jam)
 sessionStorage.setItem("durasi",durasi/60)
+sessionStorage.setItem("pengundang",pengundang)
 var mulai = tgl+"T"+jam+":00"
-var param = wa+"|"+tipe+"|"+meeting+"|"+desc+"|"+pass+"|"+mulai+"|"+durasi
+var param = wa+"|"+tipe+"|"+meeting+"|"+desc+"|"+pass+"|"+mulai+"|"+durasi+"|"+pengundang
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=zoom&data="+param, {
    'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {
@@ -262,6 +266,7 @@ function myFunction2(event,apa) {
   var x = event.which || event.keyCode;
   if (x == 220 && event.shiftKey == true){
   apa.value = hasil}
+  if (apa.getAttribute("id") == "pengundang"){document.getElementById("tekspengundang").innerHTML = apa.value}
 }
 function toast() {
 var toastElList = [].slice.call(document.querySelectorAll('.toast'))

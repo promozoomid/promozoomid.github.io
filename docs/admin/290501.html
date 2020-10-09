@@ -114,7 +114,7 @@
   <div class="col-auto" style="width:50%">
 	<h6>Durasi</h6>
 	<div class="input-group flex-nowarp">
-    <input id="durasi" type="number" class="form-control" placeholder="">
+    <input id="durasi" type="number" class="form-control" placeholder="" min="1" max="24">
 	<span class="input-group-text" id="addon-wrapping">Jam</span>
 	</div><br>
   </div>
@@ -148,11 +148,11 @@
 </table><br>
 <div align="center">
 <button type="button" id="next" class="btn btn-primary" onclick="konfirmasi()">Submit</button>
-<button type="button" id="next" class="btn btn-secondary" onclick="kerekap()">Rekap</button>
 <button id="load" class="btn btn-primari" type="button" style="display : none;" disabled>
   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
   Processing...
 </button>
+<button type="button" id="next" class="btn btn-secondary" onclick="kerekap()">Rekap</button>
 </div>
 <script>
 function pilihan() {

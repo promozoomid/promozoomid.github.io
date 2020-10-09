@@ -148,7 +148,9 @@
 	</td>
 </tr>
 </table><br>
-<h6>Nama Meeting</h6>
+<h6>Nama Pembuat Meeting</h6>
+<input id="pengundang" type="text" class="form-control" placeholder="Contoh : Zoom Meeting" onkeydown="myFunction(event,this)" onkeyup="myFunction2(event,this)" value="Zoom" readonly><div style="font-size:85%"><i>"<span id="tekspengundang">Zoom</span> is inviting you to a scheduled Zoom meeting..."</i></div><br>
+<h6>Nama Meeting <i>(Topic)</i></h6>
 <input id="meeting" type="text" class="form-control"readonly><br>
 <h6>Deskripsi (opsional)</i></h6>
 <textarea class="form-control" id="desc" rows="3" readonly></textarea><br>
@@ -202,6 +204,7 @@ document.getElementById("url").value = sessionStorage.getItem("url")
 document.getElementById("meeting").value = sessionStorage.getItem("topic")
 document.getElementById("desc").value = sessionStorage.getItem("agenda")
 document.getElementById("pass").value = sessionStorage.getItem("password")
+document.getElementById("pengundang").value = sessionStorage.getItem("pengundang")
 var tipe = sessionStorage.getItem("tipe")
 document.getElementById(tipe).checked = true
 sessionStorage.clear()
@@ -213,6 +216,7 @@ var min = pesan[1]
 var now = new Date();
 var hournow = now.getHours();
 var minnow = now.getMinutes();
+document.getElementById("tekspengundang").innerHTML = document.getElementById("pengundang").value
 
 var reserv = new Date(tanggal[0],parseInt(tanggal[1])-1,tanggal[2],hour,min)
 var reserv2 = new Date(now.getFullYear(),now.getMonth(),now.getDate(),hournow,minnow)
@@ -261,10 +265,11 @@ function invitation() {
 document.getElementById("loadinvite").style.display = "block"
 document.getElementById("invite").style.display = "none"
 var meetingId = document.getElementById("IDmeeting").value
+var pengundang = document.getElementById("pengundang").value
 if (document.getElementById("100").checked == true) {var tipe = "100"}
 else if (document.getElementById("300").checked == true) {var tipe = "300"}
 else  {var tipe = "500"}
-var param = [meetingId,tipe]
+var param = [meetingId,tipe,pengundang]
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getInvitation&data="+param, {
   'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {
