@@ -123,7 +123,7 @@ fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMo
     return response.text().then(function(text) {
 	var e = text.split("|")
 	sessionStorage.setItem("url",e[0])
-	if (e[1] == null){e[1]=""}
+	if (e[1] == "undefined"){e[1]=""}
 	sessionStorage.setItem("password",e[1])
 	sessionStorage.setItem("topic",e[2])
 	sessionStorage.setItem("agenda",e[3])
