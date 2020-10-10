@@ -94,6 +94,65 @@
     </div>
   </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="hostkey" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Lihat Host Key</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+        Tipe
+<table>
+<tr><td>
+<div class="form-check">
+		<input class="form-check-input" type="radio" name="hostkey" id="host100" onclick="pilihHost()">
+		<label class="form-check-label" for="host100">
+		100
+		</label>
+	</div></td>
+<td>
+	<div class="form-check">
+		<input class="form-check-input" type="radio" name="hostkey" id="host300" onclick="pilihHost()">
+		<label class="form-check-label" for="host300">
+		300
+		</label>
+	</div>
+	</td>
+<td>
+	<div class="form-check">
+		<input class="form-check-input" type="radio" name="hostkey" id="host500" onclick="pilihHost()">
+		<label class="form-check-label" for="host500">
+		500
+		</label>
+	</div>
+	</td>
+</tr>
+</table>
+<div id="dapethost" style="display:none">
+    <table>
+        <tr><td>Host Key :</td>
+        <td><input type="text" class="form-control" id="txthostkey" readonly></td></tr>
+        </table>
+        </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="btnhost1" onclick="lihathost()" disabled>Cek</button>
+        <button id="loadkey" class="btn btn-primary" type="button" style="display : none;" disabled>
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  Processing...
+</button>
+        <button type="button" data-dismiss="modal" class="btn btn-secondary" id="btnhost2">Oke</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="kontener">
 <div class="body">
@@ -103,7 +162,7 @@
 
 <div align="center"><h4>Tambah Pelanggan</h4></div>
 <h6>Nomor <i>Whatsapp</i></h6>
-<input id="wa" type="number" class="form-control" placeholder="Contoh : 081234567890"><br>
+<input id="wa" type="text" class="form-control" placeholder="Contoh : 081234567890"><br>
 <h6>Tanggal</h6>
 <input id="tgl" type="date" class="form-control" placeholder="Contoh : 2020-08-25"><br>
 <div class="row g-3 align-items-center">
@@ -153,6 +212,7 @@
   Processing...
 </button>
 <button type="button" id="next" class="btn btn-secondary" onclick="kerekap()">Rekap</button>
+<button type="button" id="host" class="btn btn-secondary" onclick="showHost()">Host Key</button>
 </div>
 <script>
 function pilihan() {
@@ -198,6 +258,60 @@ location.reload();
 }
 function kerekap() {
 location.href = "rekap"
+}
+function showHost(){
+document.getElementById("btnhost2").style.display = "none"
+var myModal = new bootstrap.Modal(document.getElementById("hostkey"), {backdrop:'static',keyboard:false});
+    myModal.show();
+}
+function pilihHost() {
+document.getElementById("btnhost1").style.display = "block"
+document.getElementById("btnhost1").disabled = false
+if (document.getElementById("host100").checked){sessionStorage.setItem("host","100")}
+else if (document.getElementById("host300").checked){sessionStorage.setItem("host","300")}
+else {sessionStorage.setItem("host","500")}
+}
+function lihathost(){
+document.getElementById("host100").disabled = true
+document.getElementById("host300").disabled = true
+document.getElementById("host500").disabled = true
+document.getElementById("loadkey").style.display = "block"
+document.getElementById("btnhost1").style.display = "none"
+document.getElementById("btnhost2").style.display = "none"
+document.getElementById("dapethost").style.display = "none"
+var param = sessionStorage.getItem("host")
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=carihostkey&data="+param, {
+  'method' : 'get'}).then(function(response) {
+    return response.text().then(function(e) {
+	document.getElementById("txthostkey").value = e
+document.getElementById("host100").disabled = false
+document.getElementById("host300").disabled = false
+document.getElementById("host500").disabled = false
+document.getElementById("loadkey").style.display = "none"
+document.getElementById("btnhost2").style.display = "block"
+document.getElementById("dapethost").style.display = "block"
+var el = document.createElement('textarea');
+  el.value = "Host Key : "+e
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+	})})
+}
+function dapethost(e){
+document.getElementById("txthostkey").value = e
+document.getElementById("host100").disabled = false
+document.getElementById("host300").disabled = false
+document.getElementById("host500").disabled = false
+document.getElementById("loadkey").style.display = "none"
+document.getElementById("btnhost2").style.display = "block"
+document.getElementById("dapethost").style.display = "block"
+var el = document.createElement('textarea');
+  el.value = "Host Key : "+e
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
 }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

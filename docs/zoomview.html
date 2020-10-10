@@ -98,6 +98,90 @@
     </div>
   </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="modallivestream" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel" id="headerintro">Custom Live Streaming</h5>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+		Live Streaming URL :<input type="text" class="form-control" id="streamingurl" placeholder="Contoh : rtmp://a.rtmp.youtube.com/live2">
+		Live Streaming Key :<input type="password" class="form-control" id="streamingkey" placeholder="">
+		Livestream Page URL :<input type="text" class="form-control" id="streamingpage" placeholder="Contoh : https://www.youtube.com/watch?v=uey28824">
+		</td></tr>
+        </table>
+		<span style="color:red;display:none" id="gagalstreaming"><br>Gagal, format URL tidak tepat</span>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+		<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="simpanlivestream()">Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="suksesstreaming" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel" id="headerintro">Berhasil</h5>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+        Custom Live Streaming Setting berhasil diupdate
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-primary">Oke</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="togglelive" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel" id="headerintro">Live Streaming</h5>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+        <span id="start" style="display:none">Apakah anda yakin ingin memulai Live Streaming?</span>
+		<span id="stop" style="display:none">Apakah anda yakin ingin menghentikan Live Streaming?</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-secondary">Tidak</button>
+		<button type="button" data-dismiss="modal" class="btn btn-primary" onclick="startstop()">Ya</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="sudahlive" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel" id="headerintro">Live Streaming</h5>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+        Cek kembali pada zoom anda. Jika status live streaming masih <i>Preparing</i> dalam waktu yang cukup lama silahkan klik Stop Live Streaming dan cek kembali Pengaturan Live Streaming.
+        </div>
+      </div>
+      <div class="modal-footer">
+		<button type="button" data-dismiss="modal" class="btn btn-primary" >Oke</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="kontener">
 <div class="body">
@@ -161,17 +245,34 @@
 <h6>URL Meeting</h6>
 <textarea class="form-control" id="url" rows="5" readonly></textarea><br>
 <div align="center">
-
-<button type="button" id="btnhostkey" class="btn btn-secondary" onclick="gethostkey()" disabled>Host Key
+<button type="button" id="btnhostkey" class="btn btn-primary" onclick="gethostkey(this)" disabled>Host Key
 </button>
-<button id="loadhostkey" class="btn btn-secondary" type="button" style="display : none;" >
+<button id="loadbtnhostkey" class="btn btn-primary" type="button" style="display : none;" >
   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
   Processing...
 </button>
 <br>
 Hostkey dapat diakses 15 menit sebelum zoom meeting dimulai
-<br>
-<br>
+<br><br>
+<button type="button" id="livestream" class="btn btn-secondary" onclick="showlivestream()">Pengaturan Live Streaming</button>
+<button id="loadstreaming" class="btn btn-secondary" type="button" style="display : none;" disabled>
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  Processing...
+</button><br><br>
+<button type="button" id="startstop" class="btn btn-primary" onclick="showstartstop()" disabled>Start Live Stream</button>
+<button id="loadstartstop" class="btn btn-primary" type="button" style="display : none;" disabled>
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  Processing...
+</button><br><br>
+<div id="trial" style="display:none">
+Free Trial : <span id="tgltrial"></span> <span id="jamtrial"></span>-<span id="sampaitrial"></span><br>
+<button type="button" id="btnhostkeytrial" class="btn btn-secondary" onclick="gethostkey(this)" disabled>Free Trial Host Key
+</button>
+<button id="loadbtnhostkeytrial" class="btn btn-secondary" type="button" style="display : none;" >
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  Processing...
+</button>
+</div>
 <table>
 <tr><td>
 <button type="button" id="back" class="btn btn-secondary" onclick="back()">Kembali</button>
@@ -231,13 +332,23 @@ var n = reserv.getTime() - reserv2.getTime()
 if ( n <= 900000 ) {
 document.getElementById("btnhostkey").disabled = false
 }
+if (sessionStorage.getItem("tgltrial")){
+}
+if (sessionStorage.getItem("streamingurl") != "" || sessionStorage.getItem("streamingurl") != null){
+document.getElementById("startstop").disabled = false
+}
+if (sessionStorage.getItem("status") == "" || sessionStorage.getItem("status") == null || sessionStorage.getItem("status") == "stop"){document.getElementById("startstop").innerText = "Start Live Streaming"}
+else {
+document.getElementById("startstop").innerText = "Stop Live Streaming"
+document.getElementById("livestream").disabled = true}
 }
 else {back()}
 }else {back()}
 }
-function gethostkey(){
-document.getElementById("btnhostkey").style.display = "none"
-document.getElementById("loadhostkey").style.display = "block"
+function gethostkey(apa){
+var id = apa.getAttribute("id")
+document.getElementById(id).style.display = "none"
+document.getElementById("load"+id).style.display = "block"
 var tipe
 if (document.getElementById("100").checked == true) {tipe = "100"}
 else if (document.getElementById("300").checked == true) {tipe = "300"}
@@ -245,8 +356,8 @@ else {tipe = "500"}
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=carihostkey&data="+tipe, {
   'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {
-	document.getElementById("btnhostkey").style.display = "block"
-	document.getElementById("loadhostkey").style.display = "none"
+	document.getElementById(id).style.display = "block"
+	document.getElementById("load"+id).style.display = "none"
 	document.getElementById("txthostkey").value = text
 	var myModal = new bootstrap.Modal(document.getElementById("hostkey"), {backdrop:'static',keyboard:false});
     myModal.show();
@@ -327,6 +438,86 @@ var toastElList = [].slice.call(document.querySelectorAll('.toast'))
    
         console.log(toastList); // Testing to see if it works
         }
+function showlivestream(){
+document.getElementById("streamingurl").value = sessionStorage.getItem("streamingurl")
+document.getElementById("streamingkey").value = sessionStorage.getItem("streamingkey")
+document.getElementById("streamingpage").value = sessionStorage.getItem("streamingpage")
+var myModal = new bootstrap.Modal(document.getElementById("modallivestream"), {backdrop:'static',keyboard:false});
+    myModal.show();
+}
+function simpanlivestream(){
+document.getElementById("gagalstreaming").style.display = "none"
+document.getElementById("livestream").style.display = "none"
+document.getElementById("loadstreaming").style.display = "block"
+var data =[]
+data.push(sessionStorage.getItem("IDmeeting"))
+data.push(sessionStorage.getItem("tipe"))
+data.push(document.getElementById("streamingurl").value)
+data.push(document.getElementById("streamingkey").value)
+data.push(document.getElementById("streamingpage").value)
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=livestream&data="+data, {
+  'method' : 'get'}).then(function(response) {
+    return response.text().then(function(text) {
+	if (text == "error"){
+		document.getElementById("gagalstreaming").style.display = "block"
+		document.getElementById("livestream").style.display = "block"
+		document.getElementById("loadstreaming").style.display = "none"
+		var myModal = new bootstrap.Modal(document.getElementById("modallivestream"), {backdrop:'static',keyboard:false});
+		myModal.show();
+	}
+	else {
+	sessionStorage.setItem("streamingurl",document.getElementById("streamingurl").value)
+	sessionStorage.setItem("streamingkey",document.getElementById("streamingkey").value)
+	sessionStorage.setItem("streamingpage",document.getElementById("streamingpage").value)
+	document.getElementById("livestream").style.display = "block"
+	document.getElementById("loadstreaming").style.display = "none"
+	var myModal = new bootstrap.Modal(document.getElementById("suksesstreaming"), {backdrop:'static',keyboard:false});
+		myModal.show();
+		document.getElementById("startstop").disabled = false
+	}
+	})})
+}
+function showstartstop(){
+if (document.getElementById("startstop").innerText == "Start Live Streaming"){document.getElementById("start").style.display = "block"}
+else{document.getElementById("stop").style.display = "block"}
+var myModal = new bootstrap.Modal(document.getElementById("togglelive"), {});
+myModal.show();
+}
+function startstop(){
+document.getElementById("livestream").disabled = true
+document.getElementById("startstop").style.display = "none"
+document.getElementById("loadstartstop").style.display = "block"
+document.getElementById("start").style.display = "none"
+document.getElementById("stop").style.display = "none"
+if (document.getElementById("startstop").innerText == "Start Live Streaming"){var status = "start"}
+else{var status = "stop"}
+var param = [sessionStorage.getItem("IDmeeting"),sessionStorage.getItem("tipe"),status]
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=startstop&data="+param, {
+  'method' : 'get'}).then(function(response) {
+    return response.text().then(function(text) {
+	if (text == "error"){
+		document.getElementById("startstop").style.display = "block"
+		document.getElementById("loadstartstop").style.display = "none"
+		var myModal = new bootstrap.Modal(document.getElementById("gagallive"), {});
+		myModal.show();
+	}
+	else{
+		if ( status == "start"){
+			document.getElementById("livestream").disabled = true
+			document.getElementById("startstop").innerText = "Stop Live Streaming"
+			sessionStorage.setItem("status","start")
+			var myModal = new bootstrap.Modal(document.getElementById("sudahlive"), {backdrop:'static',keyboard:false});
+			myModal.show()}
+		else {
+			document.getElementById("livestream").disabled = false
+			document.getElementById("startstop").innerText = "Start Live Streaming"
+			sessionStorage.setItem("status","stop")
+		}
+		document.getElementById("startstop").style.display = "block"
+		document.getElementById("loadstartstop").style.display = "none"
+	}
+	})})
+}
 document.addEventListener("DOMContentLoaded", awal);
 </script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
