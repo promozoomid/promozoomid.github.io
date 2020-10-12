@@ -126,6 +126,9 @@ fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMo
     return response.text().then(function(hasil) {
 	text = hasil.split("|") 
 localStorage.setItem("hasil",hasil)
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
+  "Jul", "Agt", "Sep", "Okt", "Nov", "Des"
+];
 var body = document.getElementById("table-body")
 var induk = localStorage.getItem("hasil")
 induk = induk.split("|")
@@ -133,7 +136,7 @@ induk.forEach(function(x){
 var y = x.split(",")
 var row = document.createElement("tr");
 var col1 = document.createElement("td");
-col1.innerHTML = y[2];
+col1.innerHTML = y[2].split("-")[2]+" "+monthNames[parseInt(y[2].split("-")[1])-1]+" "+y[2].split("-")[0];
 var col2 = document.createElement("td");
 col2.innerHTML = y[3]
 var col3 = document.createElement("td");
