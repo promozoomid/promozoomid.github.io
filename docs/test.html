@@ -1,0 +1,68 @@
+<<!DOCTYPE html>
+<html>
+  <head>
+    <title>Polling</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta version="v.1.0.1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+<style>
+
+.kontener {
+    display: table;
+    margin: auto;
+}
+.body {
+    display: table-cell;
+    vertical-align: middle;
+	width: 500px;
+	padding: 20px;
+	}
+
+	th, td {
+    padding: 3px;
+	padding-left: 10px;
+	text-align: left; 
+    vertical-align: middle;	
+	}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+</style>
+  </head>
+  <body>
+  
+  <script>
+var response =  fetch("https://api.zoom.us/v2/meetings/82124152270/polls", {
+  'method' : 'POST',
+  "Accept": "application/json",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "*",
+  'payload' : JSON.stringify({
+  "title": "Meeting Usefulness",
+  "questions": [
+    {
+      "name": "How useful was this meeting?",
+      "type": "multiple",
+      "answers": [
+        "Extremely useful",
+        "Somewhat useful",
+        "Not useful at all"
+      ]
+    }
+  ]
+}),
+  'headers': {
+   'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOm51bGwsImlzcyI6IlFva0FMdDliUVB1YXZ2M19BQWY2WnciLCJleHAiOjE2MDI3ODExNDAsImlhdCI6MTYwMTA1MjY2MH0.QjAgnKD410P5ZbtnqnRcsnsbuorj11K6OfT8CF-KPLE'
+  }
+})
+  </script><script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  </body>
+  </html>

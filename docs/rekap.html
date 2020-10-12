@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Promo Zoom ID - Sewa Zoom</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta version="v.1.0.1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+<style>
+
+.kontener {
+    display: table;
+    margin: auto;
+}
+.body {
+    display: table-cell;
+    vertical-align: middle;
+	width: 500px;
+	padding: 20px;
+	}
+
+	th, td {
+    padding: 3px;
+	padding-left: 10px;
+	text-align: left; 
+    vertical-align: middle;	
+	}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+</style>
+  </head>
+  <body>
+
+<!-- Modal -->
+<div class="modal fade" id="setting" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel" id="headerintro">Free Trial 30 Menit</h5>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+		<div align="center">
+		<span id="wa"></span><br><span id="tglbook"></span>
+		</div>
+		<h6>Tanggal</h6>
+		<input id="tgl" type="date" class="form-control" placeholder="Contoh : 2020-08-25"><br>
+		<div class="row g-3 align-items-center">
+		<div class="col-auto" style="width:50%">
+		<h6>Jam</h6>
+		<input id="jam" type="time" class="form-control" placeholder="Contoh : 15:00"><br>
+		</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="btn1" onclick="freetrial()">Input Free Trial</button>
+		<button id="loadtrial" class="btn btn-primary" type="button" style="display : none;" disabled>
+			<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+			Processing...
+		</button>
+		<button type="button" class="btn btn-secondary" id="btn1">Ubah Order</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="konfirmasi" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel" id="headerintro">Konfirmasi</h5>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+        Apakah data yang anda isikan sudah benar?
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-secondary" id="btn1">Tidak</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary" id="btn2" onclick="submit()">Ya, Benar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="kontener">
+<div class="body">
+<h1 style="text-align:center">Sewa Zoom Pro Murah</h1>
+  <h3 style="text-align:center">Promo Zoom ID</h3>
+  <br>
+
+<h4 style="text-align:center">Daftar Booking Zoom</h4>
+
+<div class="text-center" id="loader">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden"></span>
+  </div>
+</div>
+<table class="table table bordered table-striped" style="margin-left:auto;margin-right:auto;display:none;font-size:75%" id="tabel">
+  <thead>
+	<tr style="text-align:center">
+		<th>No. Wa</th>
+		<th>Tipe</th>
+		<th>Tgl</th>
+		<th>Jam</th>
+		<th></th>
+		<th style="text-align:center"></th>
+	</tr>
+  </thead>
+  <tbody id="table-body">
+  
+  </tbody>
+  </table>
+<br>
+
+<script>
+sessionStorage.setItem("Versi","3")
+function awal(){
+try{
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=rekap", {
+   'method' : 'get'}).then(function(response) {
+    return response.text().then(function(hasil) {
+	text = hasil.split("|") 
+localStorage.setItem("hasil",hasil)
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
+  "Jul", "Agt", "Sep", "Okt", "Nov", "Des"
+];
+var body = document.getElementById("table-body")
+var induk = localStorage.getItem("hasil")
+induk = induk.split("|")
+induk.forEach(function(x){
+var y = x.split(",")
+var row = document.createElement("tr");
+var col1 = document.createElement("td");
+col1.innerHTML = y[1]
+var col2 = document.createElement("td");
+col2.innerHTML = y[2]
+var col3 = document.createElement("td");
+col3.innerHTML = y[3].split("-")[2]+" "+monthNames[parseInt(y[3].split("-")[1])-1]+" "+y[3].split("-")[0];
+var col4 = document.createElement("td");
+col4.innerHTML = y[4]
+var col5 = document.createElement("td");
+col5.innerHTML = y[5]
+var col6 = document.createElement("td");
+var loading = "load"+y[0].toString()
+if ( y[6] == ""){col6.innerHTML = '<button type="button" id="set'+y[0]+'" detail="'+y+'" tgl='+col3.innerHTML+'" onclick="setting(this)" class="btn btn-primary" style="font-size:85%">Setting</button><button class="btn btn-primary" id="load'+y[0]+'" type="button" style="display : none;" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>  <button type="button" id="del'+y[0]+'" detail="'+y+'" onclick="buat(this)" class="btn btn-secondary" style="font-size:85%">Hapus</button>'}
+else {col6.innerHTML = '<button type="button" id="'+y[0]+'" tipe="'+y[6]+'" onclick="lihat(this)" class="btn btn-secondary">Lihat</button><button class="btn btn-secondary" id="'+loading+'" type="button" style="display : none;" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>'}
+row.appendChild(col1);
+row.appendChild(col2);
+row.appendChild(col3);
+row.appendChild(col4);
+row.appendChild(col5);
+row.appendChild(col6);
+body.appendChild(row);
+})
+document.getElementById("loader").style.display = "none"
+document.getElementById("tabel").style.display = "table"})})}
+catch(err){alert("error")}
+localStorage.setItem("index","ya")
+localStorage.removeItem("new")
+localStorage.removeItem("lihat")
+}
+function lihat(apa){
+var tombol = document.getElementsByTagName("button")
+for ( var i=0;i<tombol.length;i++ ){
+tombol[i].disabled = true
+}
+var id = apa.getAttribute("id")
+var loader = "load"+id.toString()
+apa.style.display = "none"
+document.getElementById(loader).style.display = "table-cell"
+var tipe = apa.getAttribute("tipe")
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=cariID&data="+id, {
+   'method' : 'get'}).then(function(response) {
+    return response.text().then(function(hasil) {
+text = hasil.split(",")
+sessionStorage.setItem("ID",text[0])
+sessionStorage.setItem("tgl",text[2])
+sessionStorage.setItem("jam",text[3])
+sessionStorage.setItem("durasi",text[4])
+sessionStorage.setItem("IDmeeting",text[5])
+sessionStorage.setItem("tipe",text[6])
+sessionStorage.setItem("pengundang",text[7])
+sessionStorage.setItem("streamingurl",text[9])
+sessionStorage.setItem("streamingkey",text[10])
+sessionStorage.setItem("streamingpage",text[11])
+sessionStorage.setItem("status",text[12])
+if (text[9] != null){
+sessionStorage.setItem("tgltrial",text[9])
+sessionStorage.setItem("jamtrial",text[10])
+sessionStorage.setItem("durasitrial",text[11])
+}
+localStorage.setItem("lihat","ya")
+var param2 = [text[5],tipe]
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getUrl&data="+param2, {
+  'method' : 'get'}).then(function(response) {
+    return response.text().then(function(text) {
+	var e = text.split("|")
+	sessionStorage.setItem("url",e[0])
+	if (e[1] == "undefined"){e[1]=""}
+	sessionStorage.setItem("password",e[1])
+	sessionStorage.setItem("topic",e[2])
+	sessionStorage.setItem("agenda",e[3])
+	sessionStorage.setItem("lihat","Ya")
+	location.href = "zoomview.html"
+	})})
+	})})
+}
+function setting(apa){
+apa.getAttribute("detail")
+var detail = apa.getAttribute("detail").split(",")
+var tgl = apa.getAttribute("tgl")
+sessionStorage.setItem("ID",detail[0])
+sessionStorage.setItem("wa",detail[1])
+sessionStorage.setItem("tipe",detail[2])
+sessionStorage.setItem("tgl",detail[3])
+sessionStorage.setItem("jam",detail[4])
+sessionStorage.setItem("durasi",detail[5])
+document.getElementById("wa").innerHTML = detail[1]
+document.getElementById("tglbook").innerHTML = detail[3]+" "+detail[4]
+var myModal = new bootstrap.Modal(document.getElementById("setting"), {});
+myModal.show();
+}
+function freetrial(){
+var param = []
+param.push(sessionStorage.getItem("wa")+"trial")
+param.push(sessionStorage.getItem("tipe"))
+param.push(document.getElementById("tgl").value)
+param.push(document.getElementById("jam").value)
+param.push(sessionStorage.getItem("tgl"))
+param.push(sessionStorage.getItem("jam"))
+param.push(sessionStorage.getItem("ID"))
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=addTrial&data="+param, {
+   'method' : 'get'}).then(function(response) {
+    return response.text().then(function(hasil) {
+		location.reload()
+	})})
+}
+function edit(apa){
+var tombol = document.getElementsByTagName("button")
+localStorage.setItem("new","ya")
+location.href="290501.html"
+}
+function next(){
+document.getElementById("load").style.display = "block"
+document.getElementById("next").style.display = "none"
+var param = document.getElementById("wa").value
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=masuk&data="+param, {
+   'method' : 'get'}).then(function(response) {
+    return response.text().then(function(hasil) {
+	text = hasil.split("|") 
+	if ( text=="Gaada"){
+  var myModal = new bootstrap.Modal(document.getElementById("gaadaWA"), {backdrop:'static',keyboard:false});
+    myModal.show();
+    document.getElementById("load").style.display = "none"
+    document.getElementById("next").style.display = "block"
+}
+else if( text.length > 1){
+sessionStorage.setItem("hasil",hasil)
+location.href = "zoomlist.html"
+}
+else{
+text = text.split(",")
+sessionStorage.setItem("ID",text[0])
+sessionStorage.setItem("wa",text[1])
+sessionStorage.setItem("tgl",text[2])
+sessionStorage.setItem("jam",text[3])
+sessionStorage.setItem("durasi",text[4])
+sessionStorage.setItem("IDmeeting",text[5])
+sessionStorage.setItem("tipe",text[6])
+sessionStorage.setItem("pengundang",text[7])
+sessionStorage.setItem("streamingurl",text[9])
+sessionStorage.setItem("streamingkey",text[10])
+sessionStorage.setItem("streamingpage",text[11])
+sessionStorage.setItem("status",text[12])
+sessionStorage.setItem("new","ya")
+if (text[4] != "") {
+var param = [text[4],text[5]]
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getUrl&data="+param, {
+  'method' : 'get'}).then(function(response) {
+    return response.text().then(function(text) {
+	var e = text.split("|")
+	sessionStorage.setItem("url",e[0])
+	if (e[1] == "undefined"){e[1]=""}
+	sessionStorage.setItem("password",e[1])
+	sessionStorage.setItem("topic",e[2])
+	sessionStorage.setItem("agenda",e[3])
+	sessionStorage.setItem("lihat","Ya")
+	location.href = "zoomview.html"})})}
+else{
+location.href = "zoom.html"
+}
+}
+})})
+}
+function hasilWA(e){
+if ( e==null ){
+  var myModal = new bootstrap.Modal(document.getElementById("gaadaWA"), {backdrop:'static',keyboard:false});
+    myModal.show();
+    document.getElementById("load").style.display = "none"
+    document.getElementById("next").style.display = "block"
+}
+else{
+sessionStorage.setItem("wa",e[0])
+sessionStorage.setItem("tgl",e[1])
+sessionStorage.setItem("jam",e[2])
+sessionStorage.setItem("durasi",e[3])
+sessionStorage.setItem("IDmeeting",e[4])
+sessionStorage.setItem("tipe",e[5])
+if (e[4] != "") {
+google.script.run.withSuccessHandler(lama).getUrl(e[4],e[5])}
+else{
+google.script.run.withSuccessHandler(refreshApp).reload("zoom100")}
+}
+}
+function lama(e){
+sessionStorage.setItem("url",e[0])
+if (e[1] == null){e[1]=""}
+sessionStorage.setItem("password",e[1])
+sessionStorage.setItem("topic",e[2])
+sessionStorage.setItem("agenda",e[3])
+google.script.run.withSuccessHandler(refreshApp).reload("zoom100view")
+}
+function konfirmasi(){
+var myModal = new bootstrap.Modal(document.getElementById("konfirmasi"), {backdrop:'static',keyboard:false});
+    myModal.show();
+}
+function submit(){
+document.getElementById("load").style.display = "block"
+document.getElementById("next").style.display = "none"
+var meeting = document.getElementById("meeting").value.toString()
+var desc = document.getElementById("desc").value.toString()
+var pass = document.getElementById("pass").value.toString()
+var tgl = document.getElementById("tgl").value.toString()
+var jam = document.getElementById("jam").value.toString()
+var mulai = tgl+"T"+jam+":00"
+var durasi = parseInt(document.getElementById("durasi").value)*60
+google.script.run.withSuccessHandler(showinvitation).zoom([meeting,desc,pass,mulai,durasi])
+}
+function back() {
+document.getElementById("loadback").style.display = "block"
+document.getElementById("btnback").style.display = "none"
+location.href = "buatroom.html"
+}
+function copyinvitation() {
+var el = document.createElement('textarea');
+  el.value = document.getElementById("invitation").value;
+  document.getElementById("zoominvitation").appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+  document.getElementById("sudahcopy").style.display = "block"
+  document.getElementById("btn1").style.display = "none"
+  document.getElementById("btn2").style.display = "block"
+}
+function toast() {
+var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function(toastEl) {
+        // Creates an array of toasts (it only initializes them)
+          return new bootstrap.Toast(toastEl) // No need for options; use the default options
+        });
+       toastList.forEach(toast => toast.show()); // This show them
+   
+        console.log(toastList); // Testing to see if it works
+        }
+function refreshApp(newHtml) {
+    document.open();
+    document.write(newHtml)
+    document.close();
+  }
+  document.addEventListener("DOMContentLoaded", awal);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  </body>
+</html>
