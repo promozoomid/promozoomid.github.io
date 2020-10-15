@@ -254,7 +254,7 @@
 <br>
 Hostkey dapat diakses 15 menit sebelum zoom meeting dimulai
 <br><br>
-<button type="button" id="livestream" class="btn btn-secondary" onclick="showlivestream()">Pengaturan Live Streaming</button>
+<button type="button" id="livestream" class="btn btn-secondary" onclick="showlivestream()" disabled>Pengaturan Live Streaming</button>
 <button id="loadstreaming" class="btn btn-secondary" type="button" style="display : none;" disabled>
   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
   Processing...
@@ -331,10 +331,11 @@ var reserv2 = new Date(now.getFullYear(),now.getMonth(),now.getDate(),hournow,mi
 var n = reserv.getTime() - reserv2.getTime()
 if ( n <= 900000 ) {
 document.getElementById("btnhostkey").disabled = false
+document.getElementById("livestream").disabled = false
 }
 if (sessionStorage.getItem("tgltrial")){
 }
-if (sessionStorage.getItem("streamingurl") != "" || sessionStorage.getItem("streamingurl") != null){
+if (sessionStorage.getItem("streamingurl") != "" ){
 document.getElementById("startstop").disabled = false
 }
 if (sessionStorage.getItem("status") == "" || sessionStorage.getItem("status") == null || sessionStorage.getItem("status") == "stop"){document.getElementById("startstop").innerText = "Start Live Streaming"}
