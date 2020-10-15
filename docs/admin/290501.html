@@ -46,6 +46,7 @@
       <div class="modal-body">
         <div class="mb-3">
         Data Pelanggan dengan No. Whatsapp <b><span id="hasilwa"></span></b> berhasil tersimpan
+		<textarea class="form-control" id="link" rows="3" readonly></textarea>
         </div>
       </div>
       <div class="modal-footer">
@@ -248,6 +249,14 @@ fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMo
   'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {
 	document.getElementById("hasilwa").innerText = document.getElementById("wa").value.toString()
+	var isilink = konversinomor(document.getElementById("wa").value.toString())
+	var el = document.createElement('textarea');
+	el.value = "https://promozoomid.github.io/sewazoom?customer="+isilink
+	document.getElementById("link").value = el.value
+		document.body.appendChild(el);
+		el.select();
+		document.execCommand('copy');
+		document.body.removeChild(el);
 	var myModal = new bootstrap.Modal(document.getElementById("sukses"), {});
 	myModal.show();
 	})})
@@ -318,6 +327,13 @@ var el = document.createElement('textarea');
   document.execCommand('copy');
   document.body.removeChild(el);
 }
+function konversinomor(str){
+  var res = str.slice(0,1);
+  var res2 = str.slice(1,str.length);
+  res = res.replace("0","62")
+  str = res+res2
+  return str
+  }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
