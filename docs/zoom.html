@@ -147,9 +147,9 @@
 </tr>
 </table><br>
 <h6>Nama Pembuat Meeting</h6>
-<input id="pengundang" type="text" class="form-control" placeholder="Contoh : Zoom Meeting" onkeydown="myFunction(event,this)" onkeyup="myFunction2(event,this)" value="Zoom"><div style="font-size:85%"><i>"<span id="tekspengundang">Zoom</span> is inviting you to a scheduled Zoom meeting..."</i></div><br>
-<h6>Nama Meeting <i>(Topic)</i></h6>
-<input id="meeting" type="text" class="form-control" placeholder="Contoh : Zoom Meeting" onkeydown="myFunction(event,this)" onkeyup="myFunction2(event,this)"><br>
+<input id="pengundang" type="text" class="form-control" placeholder="Contoh : Zoom" onkeydown="myFunction(event,this)" onkeyup="myFunction2(event,this)" value="Zoom"><div style="font-size:85%"><i>"<span id="tekspengundang">Zoom</span> is inviting you to a scheduled Zoom meeting..."</i></div><br>
+<h6>Judul Meeting/Acara<i>(Topic)</i></h6>
+<input id="meeting" type="text" class="form-control" placeholder="Contoh : Rapat Koordinasi Proker" onkeydown="myFunction(event,this)" onkeyup="myFunction2(event,this)"><br>
 <h6>Deskripsi (opsional)</h6>
 <textarea class="form-control" placeholder="Isikan deskripsi meeting" id="desc" rows="3"  onkeydown="myFunction(event,this)" onkeyup="myFunction2(event,this)"></textarea><br>
 <h6>Password Zoom Meeting</h6>
@@ -212,8 +212,20 @@ sessionStorage.setItem("tgl",tgl)
 sessionStorage.setItem("jam",jam)
 sessionStorage.setItem("durasi",durasi/60)
 sessionStorage.setItem("pengundang",pengundang)
+var open = "tidak"
+var hour = jam[0]
+var min = jam[1]
+var now = new Date();
+var hournow = now.getHours();
+var minnow = now.getMinutes();
+
+var reserv = new Date(tgl[0],parseInt(tgl[1])-1,tgl[2],hour,min)
+var reserv2 = new Date(now.getFullYear(),now.getMonth(),now.getDate(),hournow,minnow)
+var n = reserv.getTime() - reserv2.getTime()
+if ( reserv.getTime() < reserv2.getTime() ) {open = "ya"}
+
 var mulai = tgl+"T"+jam+":00"
-var param = ID+"|"+tipe+"|"+meeting+"|"+desc+"|"+pass+"|"+mulai+"|"+durasi+"|"+pengundang
+var param = ID+"|"+tipe+"|"+meeting+"|"+desc+"|"+pass+"|"+mulai+"|"+durasi+"|"+pengundang+"|"+open
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=zoomnew&data="+param, {
    'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {
