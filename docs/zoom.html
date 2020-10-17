@@ -218,6 +218,7 @@ var min = jam[1]
 var now = new Date();
 var hournow = now.getHours();
 var minnow = now.getMinutes();
+tgl = tgl.split("-")
 
 var reserv = new Date(tgl[0],parseInt(tgl[1])-1,tgl[2],hour,min)
 var reserv2 = new Date(now.getFullYear(),now.getMonth(),now.getDate(),hournow,minnow)
