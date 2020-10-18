@@ -227,6 +227,7 @@ if ( reserv.getTime() < reserv2.getTime() ) {open = "ya"}
 
 var mulai = tgl+"T"+jam+":00"
 var param = ID+"|"+tipe+"|"+meeting+"|"+desc+"|"+pass+"|"+mulai+"|"+durasi+"|"+pengundang+"|"+open
+try{
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=zoomnew&data="+param, {
    'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {
@@ -236,7 +237,11 @@ document.getElementById("invitation").value = e[0]
 var myModal = new bootstrap.Modal(document.getElementById("zoominvitation"), {backdrop:'static',keyboard:false});
     myModal.show();
 sessionStorage.setItem("IDmeeting",e[1])
-})})
+})})}
+catch(err){
+alert("Terjadi kesalahan, silahkan coba kembali sesaat lagi")
+location.href = sessionStorage.getItem("backup")
+}
 }
 function showinvitation(e) {
 document.getElementById("next").style.display = "none"
