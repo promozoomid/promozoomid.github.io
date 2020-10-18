@@ -63,7 +63,7 @@
 			<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
 			Processing...
 		</button>
-		<button type="button" class="btn btn-secondary" id="btn1">Hapus Order</button>
+		<button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn2" onclick="mauhapus(this)">Hapus Order</button>
       </div>
     </div>
   </div>
@@ -148,7 +148,7 @@ sessionStorage.setItem("Versi","3")
 function awal(){
 try{
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=rekap", {
-   'method' : 'get'}).then(function(response) {
+	'method' : 'get'}).then(function(response) {
     return response.text().then(function(hasil) {
 	text = hasil.split("|") 
 localStorage.setItem("hasil",hasil)
@@ -199,7 +199,7 @@ myModal.show();
 function mauhapus(apa){
 document.getElementById("hapus1").setAttribute("detail",apa.getAttribute("detail"))
 var myModal = new bootstrap.Modal(document.getElementById("mauhapus"), {});
-myModal.show();
+myModal.show(); 
 }
 function bayar(apa){
 document.getElementById("bayar1").disabled = true
@@ -270,7 +270,6 @@ fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMo
 	})})
 }
 function setting(apa){
-apa.getAttribute("detail")
 var detail = apa.getAttribute("detail").split(",")
 var tgl = apa.getAttribute("tgl")
 sessionStorage.setItem("ID",detail[0])
@@ -281,10 +280,13 @@ sessionStorage.setItem("jam",detail[4])
 sessionStorage.setItem("durasi",detail[5])
 document.getElementById("wa").innerHTML = detail[1]
 document.getElementById("tglbook").innerHTML = detail[3]+" "+detail[4]
+document.getElementById("btn2").setAttribute("detail",detail[0])
 var myModal = new bootstrap.Modal(document.getElementById("setting"), {});
 myModal.show();
 }
 function freetrial(){
+document.getElementById("btn1").disabled = true
+document.getElementById("btn2").disabled = true
 var param = []
 param.push(sessionStorage.getItem("wa")+"trial")
 param.push(sessionStorage.getItem("tipe"))
