@@ -63,7 +63,7 @@
 			<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
 			Processing...
 		</button>
-		<button type="button" class="btn btn-secondary" id="btn1">Ubah Order</button>
+		<button type="button" class="btn btn-secondary" id="btn1">Hapus Order</button>
       </div>
     </div>
   </div>
@@ -71,7 +71,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="konfirmasi" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+<div class="modal fade" id="maubayar" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
       aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" >
     <div class="modal-content">
@@ -80,12 +80,34 @@
       </div>
       <div class="modal-body">
         <div class="mb-3">
-        Apakah data yang anda isikan sudah benar?
+        Nominal<br>
+		<input id="nominal" type="number" class="form-control" ><br>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-secondary" id="btn1">Tidak</button>
-        <button type="button" data-dismiss="modal" class="btn btn-primary" id="btn2" onclick="submit()">Ya, Benar</button>
+        <button type="button" data-dismiss="modal" class="btn btn-secondary" id="bayar2">Tidak</button>
+        <button type="button" class="btn btn-primary" id="bayar1" onclick="bayar(this)">Ya, Bayar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="mauhapus" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel" id="headerintro">Konfirmasi</h5>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+        Apakah anda ingin menghapus order ini??
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-secondary" id="hapus2">Tidak</button>
+        <button type="button" class="btn btn-primary" id="hapus1" onclick="hapus(this)">Ya, Hapus</button>
       </div>
     </div>
   </div>
@@ -151,8 +173,9 @@ var col5 = document.createElement("td");
 col5.innerHTML = y[5]
 var col6 = document.createElement("td");
 var loading = "load"+y[0].toString()
-if ( y[6] == ""){col6.innerHTML = '<button type="button" id="set'+y[0]+'" detail="'+y+'" tgl='+col3.innerHTML+'" onclick="setting(this)" class="btn btn-primary" style="font-size:85%">Setting</button><button class="btn btn-primary" id="load'+y[0]+'" type="button" style="display : none;" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>  <button type="button" id="del'+y[0]+'" detail="'+y+'" onclick="buat(this)" class="btn btn-secondary" style="font-size:85%">Hapus</button>'}
-else {col6.innerHTML = '<button type="button" id="'+y[0]+'" tipe="'+y[6]+'" onclick="lihat(this)" class="btn btn-secondary">Lihat</button><button class="btn btn-secondary" id="'+loading+'" type="button" style="display : none;" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>'}
+if ( y[6] == ""){col6.innerHTML = '<button type="button" id="set'+y[0]+'" detail="'+y+'" tgl='+col3.innerHTML+'" onclick="setting(this)" class="btn btn-primary" style="font-size:85%">Gladi</button><button class="btn btn-primary" id="load'+y[0]+'" type="button" style="display : none;" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>'}
+else if ( y[6] == "BELUM BAYAR"){col6.innerHTML = '<button type="button" id="set'+y[0]+'" detail="'+y+'" tgl='+col3.innerHTML+'" onclick="setting(this)" class="btn btn-primary" style="font-size:85%">Gladi</button><button class="btn btn-primary" id="load'+y[0]+'" type="button" style="display : none;" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>  <button type="button" id="pay'+y[0]+'" detail="'+y[0]+'" onclick="maubayar(this)" class="btn btn-primary" style="font-size:85%">BAYAR</button>'}
+if ( y[5] == "T"){col6.innerHTML = '<button type="button" id="del'+y[0]+'" detail="'+y[0]+'" onclick="mauhapus(this)" class="btn btn-primary" style="font-size:85%">Hapus</button>'}
 row.appendChild(col1);
 row.appendChild(col2);
 row.appendChild(col3);
@@ -167,6 +190,38 @@ catch(err){alert("error")}
 localStorage.setItem("index","ya")
 localStorage.removeItem("new")
 localStorage.removeItem("lihat")
+}
+function maubayar(apa){
+document.getElementById("bayar1").setAttribute("detail",apa.getAttribute("detail"))
+var myModal = new bootstrap.Modal(document.getElementById("maubayar"), {});
+myModal.show();
+}
+function mauhapus(apa){
+document.getElementById("hapus1").setAttribute("detail",apa.getAttribute("detail"))
+var myModal = new bootstrap.Modal(document.getElementById("mauhapus"), {});
+myModal.show();
+}
+function bayar(apa){
+document.getElementById("bayar1").disabled = true
+document.getElementById("bayar2").disabled = true
+var ID = apa.getAttribute("detail")
+var nominal = document.getElementById("nominal").value
+var param = [ID,nominal]
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=bayar&data="+param, {
+   'method' : 'get'}).then(function(response) {
+    return response.text().then(function(hasil) {
+	location.reload()
+	})})
+}
+function hapus(apa){
+document.getElementById("hapus1").disabled = true
+document.getElementById("hapus2").disabled = true
+var ID = apa.getAttribute("detail")
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=hapus&data="+ID, {
+   'method' : 'get'}).then(function(response) {
+    return response.text().then(function(hasil) {
+	location.reload()
+	})})
 }
 function lihat(apa){
 var tombol = document.getElementsByTagName("button")
