@@ -63,6 +63,7 @@
 			<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
 			Processing...
 		</button>
+		<button type="button" class="btn btn-secondary" id="link" onclick="link()">Link</button>
 		<button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn2" onclick="mauhapus(this)">Hapus Order</button>
       </div>
     </div>
@@ -150,6 +151,11 @@ try{
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=rekap", {
 	'method' : 'get'}).then(function(response) {
     return response.text().then(function(hasil) {
+	if (hasil == "Gaada") {
+	Alert("Tidak ada pemesanan")
+	document.getElementById("loader").style.display = "none"
+	}
+	else {
 	text = hasil.split("|") 
 localStorage.setItem("hasil",hasil)
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
@@ -158,7 +164,6 @@ const monthNames = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
 var body = document.getElementById("table-body")
 var induk = localStorage.getItem("hasil")
 induk = induk.split("|")
-try{
 induk.forEach(function(x){
 var y = x.split(",")
 var row = document.createElement("tr");
@@ -186,15 +191,11 @@ row.appendChild(col6);
 body.appendChild(row);
 })
 document.getElementById("loader").style.display = "none"
-document.getElementById("tabel").style.display = "table"})})}
+document.getElementById("tabel").style.display = "table"}})})}
 catch(err){alert("error")}
 localStorage.setItem("index","ya")
 localStorage.removeItem("new")
 localStorage.removeItem("lihat")
-}
-catch(err){
-alert("Tidak ada pemesanan")
-document.getElementById("loader").style.display = "none"}
 }
 function maubayar(apa){
 document.getElementById("bayar1").setAttribute("detail",apa.getAttribute("detail"))
@@ -362,6 +363,16 @@ location.href = "zoom.html"
 }
 }
 })})
+}
+function link(){
+var wa = document.getElementById("wa").innerHTML
+var el = document.createElement('textarea');
+  el.value = "https://promozoomid.github.io/sewazoom?customer="+wa;
+  document.getElementById("setting").appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.getElementById("setting").removeChild(el);
+  alert("Link sudah disalin")
 }
 function hasilWA(e){
 if ( e==null ){
