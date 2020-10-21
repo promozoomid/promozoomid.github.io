@@ -133,7 +133,7 @@
   <thead>
 	<tr style="text-align:center">
 		<th>No. Wa</th>
-		<th>Tipe</th>
+		<th>Tipe (Akun)</th>
 		<th>Tgl</th>
 		<th>Jam</th>
 		<th></th>
@@ -172,7 +172,7 @@ var row = document.createElement("tr");
 var col1 = document.createElement("td");
 col1.innerHTML = y[1]
 var col2 = document.createElement("td");
-col2.innerHTML = y[2]
+col2.innerHTML = y[2]+" ("+y[7]+")"
 var col3 = document.createElement("td");
 col3.innerHTML = y[3].split("-")[2]+" "+monthNames[parseInt(y[3].split("-")[1])-1]+" "+y[3].split("-")[0];
 var col4 = document.createElement("td");
@@ -289,7 +289,7 @@ sessionStorage.setItem("durasi",detail[5])
 document.getElementById("wa").innerHTML = detail[1]
 document.getElementById("tglbook").innerHTML = detail[3]+" "+detail[4]
 document.getElementById("btn2").setAttribute("detail",detail[0])
-if (detail[6] != ""){document.getElementById("btn2").disabled=true}
+if (detail[6] != "" && detail[6] != "BELUM BAYAR"){document.getElementById("btn2").disabled=true}
 var myModal = new bootstrap.Modal(document.getElementById("setting"), {});
 myModal.show();
 }
