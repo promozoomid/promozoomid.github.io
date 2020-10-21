@@ -334,7 +334,7 @@ if (sessionStorage.getItem("tgltrial") != ""){
 var tgl = sessionStorage.getItem("tgltrial").split("-")
 var jam = sessionStorage.getItem("jamtrial").split(":")
 var trial = new Date(tgl[0],parseInt(tgl[1])-1,tgl[2],jam[0],jam[1])
-if (reserv.getTime() - trial.getTime() == 1800000 || trial.getTime() + 1800000 > reserv2){
+if (reserv.getTime() - trial.getTime() == 1800000 || trial.getTime() + 1200000 > reserv2){
 reserv = trial
 }
 document.getElementById("tgltrial").innerHTML = trial.getDate()+" "+bulan[parseInt(trial.getMonth())]+" "+trial.getFullYear()+"  "+("0" + trial.getHours()).slice(-2)+":"+("0" + trial.getMinutes()).slice(-2)
