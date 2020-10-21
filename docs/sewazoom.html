@@ -109,7 +109,7 @@ if ( text[14] != null){
 }
 sessionStorage.setItem("new","ya")
 if (text[5] != "") {
-var param = [text[5],text[6]]
+var param = [text[5],text[13]]
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getUrl&data="+param, {
   'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {
