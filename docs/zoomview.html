@@ -393,9 +393,7 @@ document.getElementById("loadinvite").style.display = "block"
 document.getElementById("invite").style.display = "none"
 var meetingId = document.getElementById("IDmeeting").value
 var pengundang = document.getElementById("pengundang").value
-if (document.getElementById("100").checked == true) {var tipe = "100"}
-else if (document.getElementById("300").checked == true) {var tipe = "300"}
-else  {var tipe = "500"}
+var tipe = sessionStorage.getItem("tipeasli")
 var param = [meetingId,tipe,pengundang]
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getInvitation&data="+param, {
   'method' : 'get'}).then(function(response) {
