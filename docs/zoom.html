@@ -213,8 +213,8 @@ sessionStorage.setItem("jam",jam)
 sessionStorage.setItem("durasi",durasi/60)
 sessionStorage.setItem("pengundang",pengundang)
 var open = "tidak"
-var hour = jam[0]
-var min = jam[1]
+var hour = jam.split(":")[0]
+var min = jam.split(":")[1]
 var now = new Date();
 var hournow = now.getHours();
 var minnow = now.getMinutes();
