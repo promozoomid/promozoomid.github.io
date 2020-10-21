@@ -127,6 +127,8 @@
     <span class="visually-hidden"></span>
   </div>
 </div>
+<div align="center">
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
 <table class="table table bordered table-striped" style="margin-left:auto;margin-right:auto;display:none;font-size:75%" id="tabel">
   <thead>
 	<tr style="text-align:center">
@@ -143,7 +145,7 @@
   </tbody>
   </table>
 <br>
-
+</div>
 <script>
 sessionStorage.setItem("Versi","3")
 function awal(){
@@ -179,7 +181,7 @@ var col5 = document.createElement("td");
 col5.innerHTML = y[5]
 var col6 = document.createElement("td");
 var loading = "load"+y[0].toString()
-if ( y[6] == ""){col6.innerHTML = '<button type="button" id="set'+y[0]+'" detail="'+y+'" tgl='+col3.innerHTML+'" onclick="setting(this)" class="btn btn-primary" style="font-size:85%">Gladi</button><button class="btn btn-primary" id="load'+y[0]+'" type="button" style="display : none;" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>'}
+if ( y[6] != "BELUM BAYAR"){col6.innerHTML = '<button type="button" id="set'+y[0]+'" detail="'+y+'" tgl='+col3.innerHTML+'" onclick="setting(this)" class="btn btn-primary" style="font-size:85%">Gladi</button><button class="btn btn-primary" id="load'+y[0]+'" type="button" style="display : none;" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>'}
 else if ( y[6] == "BELUM BAYAR"){col6.innerHTML = '<button type="button" id="set'+y[0]+'" detail="'+y+'" tgl='+col3.innerHTML+'" onclick="setting(this)" class="btn btn-primary" style="font-size:85%">Gladi</button><button class="btn btn-primary" id="load'+y[0]+'" type="button" style="display : none;" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>  <button type="button" id="pay'+y[0]+'" detail="'+y[0]+'" onclick="maubayar(this)" class="btn btn-primary" style="font-size:85%">BAYAR</button>'}
 if ( y[5] == "T"){col6.innerHTML = '<button type="button" id="del'+y[0]+'" detail="'+y[0]+'" onclick="mauhapus(this)" class="btn btn-primary" style="font-size:85%">Hapus</button>'}
 row.appendChild(col1);
@@ -287,6 +289,7 @@ sessionStorage.setItem("durasi",detail[5])
 document.getElementById("wa").innerHTML = detail[1]
 document.getElementById("tglbook").innerHTML = detail[3]+" "+detail[4]
 document.getElementById("btn2").setAttribute("detail",detail[0])
+if (detail[6] != ""){document.getElementById("btn2").disabled=true}
 var myModal = new bootstrap.Modal(document.getElementById("setting"), {});
 myModal.show();
 }
@@ -449,6 +452,24 @@ function refreshApp(newHtml) {
     document.write(newHtml)
     document.close();
   }
+  function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("tabel");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
   document.addEventListener("DOMContentLoaded", awal);
 </script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

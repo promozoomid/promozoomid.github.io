@@ -206,7 +206,7 @@ var tgl = document.getElementById("tgl").value.toString()
 var jam = document.getElementById("jam").value.toString()
 var durasi = parseInt(document.getElementById("durasi").value)*60
 var pengundang = document.getElementById("pengundang").value
-var tipe = sessionStorage.getItem("tipe")
+var tipe = sessionStorage.getItem("tipeasli")
 sessionStorage.setItem("ID",ID)
 sessionStorage.setItem("tgl",tgl)
 sessionStorage.setItem("jam",jam)
@@ -262,7 +262,7 @@ var el = document.createElement('textarea');
   document.getElementById("btn2").style.display = "block"
 }
 function selesai(){
-var param = [sessionStorage.getItem("IDmeeting"),sessionStorage.getItem("tipe")]
+var param = [sessionStorage.getItem("IDmeeting"),sessionStorage.getItem("tipeasli")]
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getUrl&data="+param, {
   'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {

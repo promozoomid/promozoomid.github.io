@@ -206,6 +206,33 @@
 	</td>
 </tr>
 </table><br>
+<h6>Akun Zoom</h6>
+<table>
+<tr><td>
+<div class="form-check">
+		<input class="form-check-input" type="radio" name="tipeasli" id="zoom100" onclick="pilihan2()">
+		<label class="form-check-label" for="zoom100">
+		100
+		</label>
+	</div></td>
+<td>
+	<div class="form-check">
+		<input class="form-check-input" type="radio" name="tipeasli" id="zoom300" onclick="pilihan2()">
+		<label class="form-check-label" for="zoom300">
+		300
+		</label>
+	</div>
+	</td>
+<td>
+	<div class="form-check">
+		<input class="form-check-input" type="radio" name="tipeasli" id="zoom500" onclick="pilihan2()">
+		<label class="form-check-label" for="zoom500">
+		500
+		</label>
+	</div>
+	</td>
+</tr>
+</table><br>
 <div align="center">
 <table>
 <tr>
@@ -226,6 +253,11 @@ if (document.getElementById("100").checked){sessionStorage.setItem("tipe","100")
 else if (document.getElementById("300").checked){sessionStorage.setItem("tipe","300")}
 else {sessionStorage.setItem("tipe","500")}
 }
+function pilihan2(){
+if (document.getElementById("zoom100").checked){sessionStorage.setItem("tipeasli","100")}
+else if (document.getElementById("zoom300").checked){sessionStorage.setItem("tipeasli","300")}
+else {sessionStorage.setItem("tipeasli","500")}
+}
 function konfirmasi(){
 if (document.getElementById("wa").value == "" || document.getElementById("tgl").value == "" || document.getElementById("jam").value == "" || document.getElementById("durasi").value == "" || sessionStorage.getItem("tipe") == null){
 var myModal = new bootstrap.Modal(document.getElementById("gaklengkap"), {});
@@ -244,7 +276,8 @@ var tipe = sessionStorage.getItem("tipe")
 var tgl = document.getElementById("tgl").value
 var jam = document.getElementById("jam").value.toString()
 var durasi = parseInt(document.getElementById("durasi").value)
-var param = [wa, tipe, tgl,jam,durasi]
+var tipeasli = sessionStorage.getItem("tipeasli")
+var param = [wa, tipe, tgl,jam,durasi, tipeasli]
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=newCustomer&data="+param, {
   'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {

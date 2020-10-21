@@ -245,14 +245,14 @@
 <h6>URL Meeting</h6>
 <textarea class="form-control" id="url" rows="5" readonly></textarea><br>
 <div align="center">
-<button type="button" id="btnhostkey" class="btn btn-primary" onclick="gethostkey(this)" disabled>Host Key
+<button type="button" id="btnhostkey" class="btn btn-primary" onclick="gethostkey(this)" style="display : block;" disabled>Host Key
 </button>
 <button id="loadbtnhostkey" class="btn btn-primary" type="button" style="display : none;" disabled>
   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
   Processing...
 </button>
-<br>
-Hostkey dapat diakses 15 menit sebelum zoom meeting dimulai
+Hostkey dapat diakses 15 menit sebelum zoom meeting dimulai<br>
+<span id="trial" style="display:none">Free trial 30 menit: <span id="tgltrial"></span></span>
 <br><br>
 <button type="button" id="livestream" class="btn btn-secondary" onclick="showlivestream()" disabled>Pengaturan Live Streaming</button>
 <button id="loadstreaming" class="btn btn-secondary" type="button" style="display : none;" disabled>
@@ -275,7 +275,7 @@ Free Trial : <span id="tgltrial"></span> <span id="jamtrial"></span>-<span id="s
 </div>
 <table>
 <tr><td>
-<button type="button" id="back" class="btn btn-secondary" onclick="back()">Kembali</button>
+<button type="button" id="back" class="btn btn-secondary" onclick="kembali()">Kembali</button>
 <button id="loadback" class="btn btn-secondary" type="button" style="display : none;" disabled>
   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
   Processing...
@@ -297,6 +297,7 @@ Free Trial : <span id="tgltrial"></span> <span id="jamtrial"></span>-<span id="s
 </div>
 
 <script>
+const bulan = ["Jan", "Feb", "Mar", 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', "Sep", 'Okt', 'Nov', 'Des']
 function awal() {
 var skr = new Date()
 skr = skr.getTime()
@@ -328,12 +329,21 @@ document.getElementById("tekspengundang").innerHTML = document.getElementById("p
 
 var reserv = new Date(tanggal[0],parseInt(tanggal[1])-1,tanggal[2],hour,min)
 var reserv2 = new Date(now.getFullYear(),now.getMonth(),now.getDate(),hournow,minnow)
+
+if (sessionStorage.getItem("tgltrial") != ""){
+var tgl = sessionStorage.getItem("tgltrial").split("-")
+var jam = sessionStorage.getItem("jamtrial").split(":")
+var trial = new Date(tgl[0],parseInt(tgl[1])-1,tgl[2],jam[0],jam[1])
+if (reserv.getTime() - trial.getTime() == 1800000 || trial.getTime() + 1800000 > reserv2){
+reserv = trial
+}
+document.getElementById("tgltrial").innerHTML = trial.getDate()+" "+bulan[parseInt(trial.getMonth())]+" "+trial.getFullYear()+"  "+("0" + trial.getHours()).slice(-2)+":"+("0" + trial.getMinutes()).slice(-2)
+document.getElementById("trial").style.display = "block"
+}
 var n = reserv.getTime() - reserv2.getTime()
 if ( n <= 900000 ) {
 document.getElementById("btnhostkey").disabled = false
 document.getElementById("livestream").disabled = false
-}
-if (sessionStorage.getItem("tgltrial")){
 }
 if (sessionStorage.getItem("streamingurl") != "" ){
 document.getElementById("startstop").disabled = false
@@ -343,17 +353,14 @@ else {
 document.getElementById("startstop").innerText = "Stop Live Streaming"
 document.getElementById("livestream").disabled = true}
 }
-else {back()}
-}else {back()}
+else {kembali()}
+}else {kembali()}
 }
 function gethostkey(apa){
 var id = apa.getAttribute("id")
 document.getElementById(id).style.display = "none"
 document.getElementById("load"+id).style.display = "block"
-var tipe
-if (document.getElementById("100").checked == true) {tipe = "100"}
-else if (document.getElementById("300").checked == true) {tipe = "300"}
-else {tipe = "500"}
+var tipe = sessionStorage.getItem("tipeasli")
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=carihostkey&data="+tipe, {
   'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {
@@ -375,9 +382,7 @@ function konfirmasi(){
 var myModal = new bootstrap.Modal(document.getElementById("konfirmasi"), {backdrop:'static',keyboard:false});
     myModal.show();
 }
-function back() {
-document.getElementById("loadback").style.display = "block"
-document.getElementById("back").style.display = "none"
+function kembali(){
 if (localStorage.getItem("index") != null) {
 location.href = "zoomlist.html"
 }
