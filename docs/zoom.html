@@ -227,7 +227,6 @@ if ( reserv.getTime() < reserv2.getTime() ) {open = "ya"}
 
 var mulai = tgl+"T"+jam+":00"
 var param = ID+"|"+tipe+"|"+encodeURIComponent(meeting)+"|"+encodeURIComponent(desc)+"|"+pass+"|"+mulai+"|"+durasi+"|"+pengundang+"|"+open
-alert(param)
 try{
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=zoomnew&data="+param, {
    'method' : 'get'}).then(function(response) {
