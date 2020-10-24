@@ -83,7 +83,7 @@ fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMo
 }
 else if( text.length > 1){
 var tgl = new Date()
-tgl.setMinutes(tgl.getDate() + 1)
+tgl.setDate(tgl.getDate() + 1)
 localStorage.setItem("expired",tgl.getTime())
 localStorage.setItem("hasil",hasil)
 location.href = "zoomlist.html"
@@ -122,12 +122,12 @@ fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMo
 	localStorage.setItem("lihat","Ya")
 	location.href = "zoomview.html"
 	var tgl = new Date()
-	tgl.setMinutes(tgl.getDate() + 1)
+	tgl.setDate(tgl.getDate() + 1)
 	localStorage.setItem("expired",tgl.getTime())})})}
 else{
 var tgl2 = new Date(text[2].split("-")[0],text[2].split("-")[1],text[2].split("-")[2],text[3].split(":")[0],text[3].split(":")[1])
 var tgl = new Date()
-tgl.setHours(tgl.getDate() + 1)
+tgl.setDate(tgl.getDate() + 1)
 localStorage.setItem("expired",tgl.getTime())
 localStorage.setItem("new","ya")
 location.href = "zoom.html"
