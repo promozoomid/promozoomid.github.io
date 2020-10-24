@@ -117,7 +117,7 @@ fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMo
 }
 else if( text.length > 1){
 var tgl = new Date()
-tgl.setMinutes(tgl.getMinutes() + 15)
+tgl.setMinutes(tgl.getDate() + 1)
 localStorage.setItem("expired",tgl.getTime())
 localStorage.setItem("hasil",hasil)
 location.href = "zoomlist.html"
@@ -156,11 +156,11 @@ fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMo
 	localStorage.setItem("lihat","Ya")
 	location.href = "zoomview.html"
 	var tgl = new Date()
-	tgl.setMinutes(tgl.getMinutes() + 15)
+	tgl.setMinutes(tgl.getDate() + 1)
 	localStorage.setItem("expired",tgl.getTime())})})}
 else{
 var tgl = new Date()
-tgl.setMinutes(tgl.getMinutes() + 15)
+tgl.setMinutes(tgl.getDate() + 1)
 localStorage.setItem("expired",tgl.getTime())
 localStorage.setItem("new","ya")
 location.href = "zoom.html"
