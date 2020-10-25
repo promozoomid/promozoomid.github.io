@@ -67,7 +67,8 @@
       </div>
       <div class="modal-body">
         <div class="mb-3">
-        Url dan Meeting ID berhasil disalin
+        Url dan Meeting ID berhasil disalin, silahkan salin secara manual jika diperlukan
+		<textarea class="form-control" id="salinmanual" rows="5" readonly></textarea>
         </div>
       </div>
       <div class="modal-footer">
@@ -404,6 +405,7 @@ fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMo
 	el.select();
 	document.execCommand('copy');
 	document.body.removeChild(el);
+	document.getElementById("salinmanual").value = text
 	var myModal = new bootstrap.Modal(document.getElementById("suksescopy"), {backdrop:'static',keyboard:false});
 	myModal.show();
 	document.getElementById("loadinvite").style.display = "none"
