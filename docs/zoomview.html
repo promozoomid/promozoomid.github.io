@@ -393,7 +393,7 @@ function invitation() {
 document.getElementById("loadinvite").style.display = "block"
 document.getElementById("invite").style.display = "none"
 var meetingId = document.getElementById("IDmeeting").value
-var pengundang = document.getElementById("pengundang").value
+var pengundang = encodeURIComponent(document.getElementById("pengundang").value)
 var tipe = sessionStorage.getItem("tipeasli")
 var param = [meetingId,tipe,pengundang]
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getInvitation&data="+param, {
