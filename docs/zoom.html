@@ -270,7 +270,7 @@ var n = reserv.getTime() - reserv2.getTime()
 if ( reserv.getTime() < reserv2.getTime() ) {open = "ya"}
 
 var mulai = tgl+"T"+jam+":00"
-var param = ID+"|"+tipe+"|"+encodeURIComponent(meeting)+"|"+encodeURIComponent(desc)+"|"+pass+"|"+mulai+"|"+durasi+"|"+pengundang+"|"+open
+var param = ID+"|"+tipe+"|"+encodeURIComponent(meeting)+"|"+encodeURIComponent(desc)+"|"+encodeURIComponent(pass)+"|"+mulai+"|"+durasi+"|"+encodeURIComponent(pengundang)+"|"+open
 try{
 document.getElementById("loadtext").innerHTML = "Hampir Selesai..."
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=zoomnew&data="+param, {
