@@ -147,7 +147,7 @@ col4.innerHTML = y[8]
 var col5 = document.createElement("td");
 var loading = "load"+y[0].toString()
 if ( y[8] == ""){col5.innerHTML = '<button type="button" id="'+y[0]+'" tipe="'+y[6]+'" tipeasli="'+y[13]+'" tgl="'+y[2]+'" jam="'+y[3]+'" durasi="'+y[4]+'" onclick="buat(this)" class="btn btn-primary">Buat</button><button class="btn btn-primary" id="load'+y[0]+'" type="button" style="display : none;" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>'}
-else {col5.innerHTML = '<button type="button" id="'+y[0]+'" tipe="'+y[6]+'" onclick="lihat(this)" class="btn btn-secondary">Lihat</button><button class="btn btn-secondary" id="'+loading+'" type="button" style="display : none;" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>'}
+else {col5.innerHTML = '<button type="button" id="'+y[0]+'" tipe="'+y[6]+'" tipeasli="'+y[13]+'" onclick="lihat(this)" class="btn btn-secondary">Lihat</button><button class="btn btn-secondary" id="'+loading+'" type="button" style="display : none;" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></button>'}
 row.appendChild(col1);
 row.appendChild(col2);
 row.appendChild(col3);
@@ -173,7 +173,7 @@ var id = apa.getAttribute("id")
 var loader = "load"+id.toString()
 apa.style.display = "none"
 document.getElementById(loader).style.display = "table-cell"
-var tipe = apa.getAttribute("tipe")
+var tipe = apa.getAttribute("tipeasli")
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=cariID&data="+id, {
    'method' : 'get'}).then(function(response) {
     return response.text().then(function(hasil) {
