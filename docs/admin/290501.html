@@ -165,7 +165,7 @@
 <h6>Nomor <i>Whatsapp</i></h6>
 <input id="wa" type="text" class="form-control" placeholder="Contoh : 081234567890"><br>
 <h6>Tanggal</h6>
-<input id="tgl" type="date" class="form-control" placeholder="Contoh : 2020-08-25"><br>
+<input id="tgl" type="date" class="form-control" placeholder="Contoh : 2020-08-25" onchange="cektgl()"><br>
 <div class="row g-3 align-items-center">
   <div class="col-auto" style="width:50%">
 	<h6>Jam</h6>
@@ -248,6 +248,9 @@
 </table>
 </div>
 <script>
+function cektgl(){
+  alert(document.getElementById("tgl").value)
+}
 function pilihan() {
 if (document.getElementById("100").checked){sessionStorage.setItem("tipe","100")}
 else if (document.getElementById("300").checked){sessionStorage.setItem("tipe","300")}
@@ -269,6 +272,7 @@ var myModal = new bootstrap.Modal(document.getElementById("konfirmasi"), {backdr
     }
 }
 function submit(){
+	  alert(document.getElementById("tgl").value)
 document.getElementById("load").style.display = "block"
 document.getElementById("next").style.display = "none"
 var wa = document.getElementById("wa").value.toString()
