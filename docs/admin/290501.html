@@ -175,7 +175,7 @@
 	<h6>Durasi</h6>
 	<div class="input-group flex-nowarp">
     <input id="durasi" type="number" class="form-control" placeholder="" min="1" max="24">
-	<span class="input-group-text" id="addon-wrapping">Jam</span>
+	<span class="input-group-text" id="addon-wrapping">Jam</span><br>
 		<div class="form-check">
 		<input class="form-check-input" type="checkbox" name="durasi" id="harian" onclick="durasi()">
 		<label class="form-check-label" for="harian">
@@ -256,14 +256,14 @@
 <script>
 function durasi(){
   if(document.querySelector("#harian").checked){
-    document.querySelector("#harian").type = "text"
-    document.querySelector("#harian").value = "H"
-    document.querySelector("#harian").readonly = true
+    document.querySelector("#durasi").type = "text"
+    document.querySelector("#durasi").value = "H"
+    document.querySelector("#durasi").readonly = true
   }
   else {
-    document.querySelector("#harian").type = "number"
-    document.querySelector("#harian").value = ""
-    document.querySelector("#harian").readonly = false
+    document.querySelector("#durasi").type = "number"
+    document.querySelector("#durasi").value = ""
+    document.querySelector("#durasi").readonly = false
   }
 }
 function cektgl(){
