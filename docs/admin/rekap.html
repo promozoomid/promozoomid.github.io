@@ -83,6 +83,16 @@
         <div class="mb-3">
         Nominal<br>
 		<input id="nominal" type="number" class="form-control" ><br>
+		Tujuan<br>
+    <select id="dompet" class="form-control">
+        <option>BCA</option>
+        <option>BNI</option>
+        <option>BCA VA</option>
+        <option>Gopay</option>
+        <option>Dana</option>
+        <option>Ovo</option>
+        <option>Linkaja</option>
+    </select>
         </div>
       </div>
       <div class="modal-footer">
@@ -214,7 +224,8 @@ document.getElementById("bayar1").disabled = true
 document.getElementById("bayar2").disabled = true
 var ID = apa.getAttribute("detail")
 var nominal = document.getElementById("nominal").value
-var param = [ID,nominal]
+var dompet = document.getElementById("dompet").value
+var param = [ID,nominal,dompet]
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=bayar&data="+param, {
    'method' : 'get'}).then(function(response) {
     return response.text().then(function(hasil) {
