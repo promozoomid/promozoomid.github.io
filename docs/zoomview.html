@@ -201,7 +201,7 @@
   <div class="col-auto" style="width:50%">
 	<h6>Durasi</h6>
 	<div class="input-group flex-nowarp">
-    <input id="durasi" type="number" class="form-control" placeholder="" readonly>
+    <input id="durasi" type="text" class="form-control" placeholder="" readonly>
 	<span class="input-group-text" id="addon-wrapping">Jam</span>
 	</div><br>
   </div>
@@ -320,6 +320,9 @@ var wa = sessionStorage.getItem("wa")
 sessionStorage.setItem("wa",wa)
 sessionStorage.setItem("IDmeeting",document.getElementById("IDmeeting").value)
 var pesan = document.getElementById("jam").value.split(":")
+if (document.getElementById("jam").value == "H"){
+  pesan = "00:00"
+}
 var tanggal = document.getElementById("tgl").value.split("-")
 var hour = pesan[0]
 var min = pesan[1]
