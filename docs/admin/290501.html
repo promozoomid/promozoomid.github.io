@@ -231,6 +231,14 @@ Harian
 	</td>
 <td>
 	<div class="form-check">
+		<input class="form-check-input" type="radio" name="tipeasli" id="zoom301" onclick="pilihan2()">
+		<label class="form-check-label" for="zoom500">
+		301
+		</label>
+	</div>
+	</td>
+<td>
+	<div class="form-check">
 		<input class="form-check-input" type="radio" name="tipeasli" id="zoom500" onclick="pilihan2()">
 		<label class="form-check-label" for="zoom500">
 		500
@@ -277,6 +285,7 @@ else {sessionStorage.setItem("tipe","500")}
 function pilihan2(){
 if (document.getElementById("zoom100").checked){sessionStorage.setItem("tipeasli","100")}
 else if (document.getElementById("zoom300").checked){sessionStorage.setItem("tipeasli","300")}
+else if (document.getElementById("zoom301").checked){sessionStorage.setItem("tipeasli","301")}
 else {sessionStorage.setItem("tipeasli","500")}
 }
 function konfirmasi(){
