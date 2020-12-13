@@ -267,7 +267,7 @@ tgl = tgl.split("-")
 var reserv = new Date(tgl[0],parseInt(tgl[1])-1,tgl[2],hour,min)
 var reserv2 = new Date(now.getFullYear(),now.getMonth(),now.getDate(),hournow,minnow)
 var n = reserv.getTime() - reserv2.getTime()
-if (  n <= 1800000 && n > 0 ) {open = "ya"}
+if (  n <= 1800000 ) {open = "ya"}
 
 var mulai = tgl+"T"+jam+":00"
 var param = ID+"|"+tipe+"|"+encodeURIComponent(meeting)+"|"+encodeURIComponent(desc)+"|"+encodeURIComponent(pass)+"|"+mulai+"|"+durasi+"|"+encodeURIComponent(pengundang)+"|"+open
