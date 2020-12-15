@@ -130,7 +130,7 @@ var tgl = new Date()
 tgl.setDate(tgl.getDate() + 1)
 localStorage.setItem("expired",tgl.getTime())
 localStorage.setItem("new","ya")
-location.href = "zoom.html"
+location.replace("zoom.html")
 }
 }
 })})
