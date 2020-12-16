@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Promo Zoom ID - Customer Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta version="v.1.0.1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+<style>
+.kontener {
+    display: table;
+    margin: auto;
+}
+.body {
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+	width: 500px;
+	padding: 20px;
+	}
+
+	th, td {
+    padding: 3px;
+	padding-left: 10px;
+	text-align: left; 
+    vertical-align: middle;	
+	}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+#logo-gpn{
+  display: block;
+  position: absolute;
+  left: 85%;
+  transform: translate(-50%, -50%);
+}
+#logo-qris{
+    display: block;
+  position: absolute;
+  left: 30%;
+  transform: translate(-50%, -50%);
+}
+#sudahbayar{
+    margin: 0;
+  position: absolute;
+  top: 150%;
+  
+}
+</style>
+  </head>
+  <body>
+    <div class="kontener" style="text-align:center">
+        <div class="body">
+            <div id="loading">
+                <h2>Mohon tunggu sebentar...</h2>
+            </div>
+            <div id="awal" hidden>
+        <h1 style="text-align:center">Promo Zoom ID</h1>
+          <h3 style="text-align:center">Pembayaran QRIS</h3>
+          <br>
+    
+        <h6>Tanggal</h6>
+        <input id="tgl" type="date" class="form-control" placeholder="Contoh : 2020-08-25" readonly><br>
+        <div class="row g-3 align-items-center">
+          <div class="col-auto" style="width:50%">
+            <h6>Jam</h6>
+            <input id="jam" type="time" class="form-control" placeholder="Contoh : 15:00" readonly><br>
+          </div>
+          <div class="col-auto" style="width:50%">
+            <h6>Durasi</h6>
+            <div class="input-group flex-nowarp">
+            <input id="durasi" type="text" class="form-control" placeholder="" readonly>
+            <span class="input-group-text" id="addon-wrapping">Jam</span>
+            </div><br>
+          </div>
+        </div>
+        <h6>Pilihan Kapasitas <i>(Participants)</i></h6>
+        <table>
+        <tr><td>
+        <div class="form-check">
+                <input class="form-check-input" type="radio" name="tipe" id="100" disabled>
+                <label class="form-check-label" for="100">
+                100
+                </label>
+            </div></td>
+        <td>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="tipe" id="300" disabled>
+                <label class="form-check-label" for="300">
+                300
+                </label>
+            </div>
+            </td>
+        <td>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="tipe" id="500" disabled>
+                <label class="form-check-label" for="500">
+                500
+                </label>
+            </div>
+            </td>
+        </tr>
+        </table><br>
+        <h5 style="font-weight:normal">Total Tagihan:</h5>
+        <h4 class="nominal">Rp50.000</h4><br>
+        <div align="center">
+        <button type="button" id="btnbayar" class="btn btn-primary" onclick="bayar(this)" style="display : block;"><h5>Bayar pakai QRIS</h5>
+        </button>
+        <button id="loadbtnbayar" class="btn btn-primary" type="button" style="display : none;" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <h5>Processing...</h5>
+          </button>
+    </div></div>
+    <div id="bayar" hidden>
+        <div id="qris-template">
+        <div id="logo-atas" >
+            <br>
+            <img id="logo-qris" align="left" src="img/qris.png" height="50px"/>
+            <img id="logo-gpn" align="left" src="img/gpn.png" width="40px"/><br>
+        </div>
+        <h4></h4>
+        <br>
+        <h4 style="text-align:center">PROMO ZOOM ID</h4>
+        <img id="qrcode" width="200px" src="/img/qris-square.png"/><br>
+        <h4 class="nominal">Rp50.000</h4>
+        <br>
+        Bayar sebelum<br><h5>15 Januari 2020 18:00</h5><br>
+        <div id="logo-bawah">
+            Dapat di-<i>Scan</i> menggunakan :
+            <img id="payment-merchant" width="100%" src="img/payment-logo-compiled.jpg"/><br>
+        </div>
+        </div>
+        Serta Bank dan Dompet digital Lainnya yang terdaftar <a href="https://www.bi.go.id/id/sistem-pembayaran/informasi-perizinan/uang-elektronik/penyelenggara-berizin/Contents/Default.aspx" target="_blank">disini.</a>
+        <br><br>
+        <div align="center">
+            <button type="button" id="btnsavepng" class="btn btn-primary" style="display : block;">Download QRIS
+            </button><br>
+            <button type="button" id="btnsudahbayar" class="btn btn-primary" onclick="sudahbayar(this)" style="display : block;"><h5>Sudah Bayar</h5>
+            </button>
+            <button id="loadbtnsudahbayar" class="btn btn-primary" type="button" hidden disabled>
+                <h5>Checking...</h5>
+              </button>
+        </div>
+    </div>
+    <div id="sudahbayar">
+        <br>
+        <h3>Pembayaran Berhasil</h3>
+        <br>
+        <img style="width:30%;min-width: 100px" src="img/checked.png"/><br>
+        <br>
+        <h4 class="nominal">Rp50.000</h4>
+        <span id="transaction_id"></span><br>
+        <br>
+        <i>Mengalihkan dalam beberapa detik kedepan, mohon tunggu...</i>
+    </div>
+        
+        </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/html2canvas.js" type="text/javascript"></script>
+        <script src="qris.js"></script>
+  <script>
+      
+sessionStorage.setItem("backup",location.href)
+
+var param = sessionStorage.getItem("ID")
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=cariHarga&data="+param, {
+  'method' : 'get'}).then(function(response) {
+    return response.text().then(function(text) {
+        console.log(text)
+        var nomor = parseInt(text)
+        sessionStorage.setItem("harga",nomor)
+        document.querySelectorAll(".nominal").forEach(nominal =>{nominal.innerHTML = "Rp"+numberWithCommas(nomor)})
+        document.querySelector("#loading").hidden = true
+        document.querySelector("#awal").hidden = false
+    })})
+var url = "https://promozoomid-proxy.herokuapp.com/https://api.sandbox.midtrans.com/v2/charge";
+
+var xhr = new XMLHttpRequest();
+xhr.open("POST", url);
+
+xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+xhr.setRequestHeader("Authorization", "Basic U0ItTWlkLXNlcnZlci1JYjFhYl9mMnpNZEFNZW95TWVtVUNSQkE6");
+xhr.setRequestHeader("Access-Control-Allow-Origin", "")
+xhr.setRequestHeader("Access-Control-Allow-Methods", "*")
+
+xhr.onreadystatechange = function () {
+   if (xhr.readyState === 4) {
+      console.log(xhr.status);
+      var respon = JSON.parse(xhr.responseText)
+      console.log(respon)
+      console.log(respon.actions[0].url);
+      document.querySelector("#qrcode").src = respon.actions[0].url
+   }};
+
+var data = `{
+  "payment_type": "qris",
+  "transaction_details": {
+    "order_id": "order0303",
+    "gross_amount": 1500
+  },
+  "customer_details": {
+    "phone": "081223323423"
+  },
+  "qris": {
+    "acquirer": "airpay shopee"
+  }
+}`;
+
+xhr.send(data);
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+};
+var param = getUrlParameter('id');
+localStorage.setItem("wa",param)
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=test&data="+param, {
+   'method' : 'get'}).then(function(response) {
+    return response.text().then(function(hasil) {
+	text = hasil.split("|") 
+	if ( text=="Gaada"){
+  var myModal = new bootstrap.Modal(document.getElementById("gaadaWA"), {backdrop:'static',keyboard:false});
+    myModal.show();
+}
+else if( text.length > 1){
+var tgl = new Date()
+tgl.setDate(tgl.getDate() + 1)
+localStorage.setItem("expired",tgl.getTime())
+localStorage.setItem("hasil",hasil)
+location.href = "zoomlist.html"
+}
+else{
+text = hasil.split(",")
+sessionStorage.setItem("ID",text[0])
+sessionStorage.setItem("wa",text[1])
+sessionStorage.setItem("tgl",text[2])
+sessionStorage.setItem("jam",text[3])
+sessionStorage.setItem("durasi",text[4])
+sessionStorage.setItem("IDmeeting",text[5])
+sessionStorage.setItem("tipe",text[6])
+sessionStorage.setItem("pengundang",text[7])
+sessionStorage.setItem("streamingurl",text[9])
+sessionStorage.setItem("streamingkey",text[10])
+sessionStorage.setItem("streamingpage",text[11])
+sessionStorage.setItem("status",text[12])
+sessionStorage.setItem("tipeasli",text[13])
+if ( text[14] != null){
+	sessionStorage.setItem("tgltrial",text[14])
+	sessionStorage.setItem("jamtrial",text[15])
+}
+sessionStorage.setItem("new","ya")
+if (text[5] != "") {
+var param = [text[5],text[13]]
+fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getUrl&data="+param, {
+  'method' : 'get'}).then(function(response) {
+    return response.text().then(function(text) {
+	var e = text.split("|")
+	sessionStorage.setItem("url",e[0])
+	if (e[1] == "undefined"){e[1]=""}
+	sessionStorage.setItem("password",e[1])
+	sessionStorage.setItem("topic",e[2])
+	sessionStorage.setItem("agenda",e[3])
+	localStorage.setItem("lihat","Ya")
+	location.href = "zoomview.html"
+	var tgl = new Date()
+	tgl.setDate(tgl.getDate() + 1)
+	localStorage.setItem("expired",tgl.getTime())})})}
+else{
+var tgl2 = new Date(text[2].split("-")[0],text[2].split("-")[1],text[2].split("-")[2],text[3].split(":")[0],text[3].split(":")[1])
+var tgl = new Date()
+tgl.setDate(tgl.getDate() + 1)
+localStorage.setItem("expired",tgl.getTime())
+localStorage.setItem("new","ya")
+location.replace("zoom.html")
+}
+}
+})})
+  </script>
+  </body>
+  </html>
