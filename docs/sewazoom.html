@@ -57,7 +57,7 @@
   <h2>Mohon tunggu sebentar...</h2>
   </div>
   <script>
-sessionStorage.setItem("backup",location.href)
+localStorage.setItem("backup",location.href)
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = window.location.search.substring(1),
         sURLVariables = sPageURL.split('&'),
@@ -91,7 +91,6 @@ location.href = "zoomlist.html"
 else{
 text = hasil.split(",")
 sessionStorage.setItem("ID",text[0])
-sessionStorage.setItem("wa",text[1])
 sessionStorage.setItem("tgl",text[2])
 sessionStorage.setItem("jam",text[3])
 sessionStorage.setItem("durasi",text[4])
@@ -108,7 +107,7 @@ if ( text[14] != null){
 	sessionStorage.setItem("jamtrial",text[15])
 }
 sessionStorage.setItem("new","ya")
-if (text[5] != "") {
+if (text[5] != "" && text[5] != "QRIS") {
 var param = [text[5],text[13]]
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getUrl&data="+param, {
   'method' : 'get'}).then(function(response) {
@@ -129,8 +128,10 @@ var tgl2 = new Date(text[2].split("-")[0],text[2].split("-")[1],text[2].split("-
 var tgl = new Date()
 tgl.setDate(tgl.getDate() + 1)
 localStorage.setItem("expired",tgl.getTime())
+if (text[5] == "QRIS"){location.replace("qris.html")}
+else{
 localStorage.setItem("new","ya")
-location.replace("zoom.html")
+location.replace("zoom.html")}
 }
 }
 })})

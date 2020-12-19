@@ -42,7 +42,7 @@
   left: 30%;
   transform: translate(-50%, -50%);
 }
-#sudahbayar{
+#sudahbayar,#qrexpired{
     margin: 0;
   position: absolute;
   top: 150%;
@@ -106,9 +106,9 @@
         <h5 style="font-weight:normal">Total Tagihan:</h5>
         <h4 class="nominal">Rp50.000</h4><br>
         <div align="center">
-        <button type="button" id="btnbayar" class="btn btn-primary" onclick="bayar(this)" style="display : block;"><h5>Bayar pakai QRIS</h5>
+        <button type="button" id="btnbayar" class="btn btn-primary" onclick="bayar('new')" style="display : block;"><h5>Bayar pakai QRIS</h5>
         </button>
-        <button id="loadbtnbayar" class="btn btn-primary" type="button" style="display : none;" disabled>
+        <button id="loadbtnbayar" class="btn btn-primary" type="button" hidden disabled>
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             <h5>Processing...</h5>
           </button>
@@ -126,7 +126,7 @@
         <img id="qrcode" width="200px" src="/img/qris-square.png"/><br>
         <h4 class="nominal">Rp50.000</h4>
         <br>
-        Bayar sebelum<br><h5>15 Januari 2020 18:00</h5><br>
+        Bayar sebelum<br><h5 class="deadline">15 Januari 2020 18:00</h5><br>
         <div id="logo-bawah">
             Dapat di-<i>Scan</i> menggunakan :
             <img id="payment-merchant" width="100%" src="img/payment-logo-compiled.jpg"/><br>
@@ -137,14 +137,14 @@
         <div align="center">
             <button type="button" id="btnsavepng" class="btn btn-primary" style="display : block;">Download QRIS
             </button><br>
-            <button type="button" id="btnsudahbayar" class="btn btn-primary" onclick="sudahbayar(this)" style="display : block;"><h5>Sudah Bayar</h5>
+            <button type="button" id="btnsudahbayar" class="btn btn-primary" onclick="sudahbayar(this)" hidden><h5>Sudah Bayar</h5>
             </button>
             <button id="loadbtnsudahbayar" class="btn btn-primary" type="button" hidden disabled>
                 <h5>Checking...</h5>
               </button>
         </div>
     </div>
-    <div id="sudahbayar">
+    <div id="sudahbayar" hidden>
         <br>
         <h3>Pembayaran Berhasil</h3>
         <br>
@@ -155,7 +155,17 @@
         <br>
         <i>Mengalihkan dalam beberapa detik kedepan, mohon tunggu...</i>
     </div>
-        
+    <div id="qrexpired" hidden>
+        <br>
+        <h3>Pembayaran <i>Expired</i></h3>
+        <br>
+        <img style="width:30%;min-width: 100px" src="img/checked.png"/><br>
+        <br>
+        <h4></h4>
+        <h5>Anda akan diarahkan untuk membuat QR Code yang baru</h5><br>
+        <br>
+        <i>Mengalihkan dalam beberapa detik kedepan, mohon tunggu...</i>
+    </div>
         </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -168,132 +178,37 @@
   <script>
       
 sessionStorage.setItem("backup",location.href)
-
+document.getElementById("tgl").value = sessionStorage.getItem("tgl")
+document.getElementById("jam").value = sessionStorage.getItem("jam")
+document.getElementById("durasi").value = sessionStorage.getItem("durasi")
+var tipe = sessionStorage.getItem("tipe")
+document.getElementById(tipe).checked = true
 var param = sessionStorage.getItem("ID")
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=cariHarga&data="+param, {
   'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {
         console.log(text)
-        var nomor = parseInt(text)
+        var hasil = text.split(",")
+        var nomor = parseInt(hasil[0])
         sessionStorage.setItem("harga",nomor)
         document.querySelectorAll(".nominal").forEach(nominal =>{nominal.innerHTML = "Rp"+numberWithCommas(nomor)})
-        document.querySelector("#loading").hidden = true
-        document.querySelector("#awal").hidden = false
+        if (hasil[1] == "gaada"){
+            document.querySelector("#awal").hidden = false
+            document.querySelector("#loading").hidden = true
+        }
+        else {
+            document.querySelector("#btnsudahbayar").setAttribute("id_trx",hasil[1])
+            document.querySelector("#qrcode").src = hasil[2]
+            var tgl = new Date(parseInt(hasil[8]))
+            document.querySelectorAll(".deadline").forEach(deadline => {deadline.innerHTML=tgl.getDate()+" "+bulan[tgl.getMonth()]+" "+tgl.getFullYear()+"  "+tgl.getHours()+":"+tgl.getMinutes()})
+            sudahbayar()
+            document.querySelector("#loading").hidden = true
+            document.querySelector("#bayar").hidden = false
+        }
     })})
-var url = "https://promozoomid-proxy.herokuapp.com/https://api.sandbox.midtrans.com/v2/charge";
-
-var xhr = new XMLHttpRequest();
-xhr.open("POST", url);
-
-xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-xhr.setRequestHeader("Authorization", "Basic U0ItTWlkLXNlcnZlci1JYjFhYl9mMnpNZEFNZW95TWVtVUNSQkE6");
-xhr.setRequestHeader("Access-Control-Allow-Origin", "")
-xhr.setRequestHeader("Access-Control-Allow-Methods", "*")
-
-xhr.onreadystatechange = function () {
-   if (xhr.readyState === 4) {
-      console.log(xhr.status);
-      var respon = JSON.parse(xhr.responseText)
-      console.log(respon)
-      console.log(respon.actions[0].url);
-      document.querySelector("#qrcode").src = respon.actions[0].url
-   }};
-
-var data = `{
-  "payment_type": "qris",
-  "transaction_details": {
-    "order_id": "order0303",
-    "gross_amount": 1500
-  },
-  "customer_details": {
-    "phone": "081223323423"
-  },
-  "qris": {
-    "acquirer": "airpay shopee"
-  }
-}`;
-
-xhr.send(data);
-
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
-var getUrlParameter = function getUrlParameter(sParam) {
-    var sPageURL = window.location.search.substring(1),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-        }
-    }
-};
-var param = getUrlParameter('id');
-localStorage.setItem("wa",param)
-fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=test&data="+param, {
-   'method' : 'get'}).then(function(response) {
-    return response.text().then(function(hasil) {
-	text = hasil.split("|") 
-	if ( text=="Gaada"){
-  var myModal = new bootstrap.Modal(document.getElementById("gaadaWA"), {backdrop:'static',keyboard:false});
-    myModal.show();
-}
-else if( text.length > 1){
-var tgl = new Date()
-tgl.setDate(tgl.getDate() + 1)
-localStorage.setItem("expired",tgl.getTime())
-localStorage.setItem("hasil",hasil)
-location.href = "zoomlist.html"
-}
-else{
-text = hasil.split(",")
-sessionStorage.setItem("ID",text[0])
-sessionStorage.setItem("wa",text[1])
-sessionStorage.setItem("tgl",text[2])
-sessionStorage.setItem("jam",text[3])
-sessionStorage.setItem("durasi",text[4])
-sessionStorage.setItem("IDmeeting",text[5])
-sessionStorage.setItem("tipe",text[6])
-sessionStorage.setItem("pengundang",text[7])
-sessionStorage.setItem("streamingurl",text[9])
-sessionStorage.setItem("streamingkey",text[10])
-sessionStorage.setItem("streamingpage",text[11])
-sessionStorage.setItem("status",text[12])
-sessionStorage.setItem("tipeasli",text[13])
-if ( text[14] != null){
-	sessionStorage.setItem("tgltrial",text[14])
-	sessionStorage.setItem("jamtrial",text[15])
-}
-sessionStorage.setItem("new","ya")
-if (text[5] != "") {
-var param = [text[5],text[13]]
-fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getUrl&data="+param, {
-  'method' : 'get'}).then(function(response) {
-    return response.text().then(function(text) {
-	var e = text.split("|")
-	sessionStorage.setItem("url",e[0])
-	if (e[1] == "undefined"){e[1]=""}
-	sessionStorage.setItem("password",e[1])
-	sessionStorage.setItem("topic",e[2])
-	sessionStorage.setItem("agenda",e[3])
-	localStorage.setItem("lihat","Ya")
-	location.href = "zoomview.html"
-	var tgl = new Date()
-	tgl.setDate(tgl.getDate() + 1)
-	localStorage.setItem("expired",tgl.getTime())})})}
-else{
-var tgl2 = new Date(text[2].split("-")[0],text[2].split("-")[1],text[2].split("-")[2],text[3].split(":")[0],text[3].split(":")[1])
-var tgl = new Date()
-tgl.setDate(tgl.getDate() + 1)
-localStorage.setItem("expired",tgl.getTime())
-localStorage.setItem("new","ya")
-location.replace("zoom.html")
-}
-}
-})})
-  </script>
+</script>
   </body>
   </html>
