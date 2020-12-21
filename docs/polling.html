@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Promo Zoom ID - Sewa Zoom</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta version="v.1.0.1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<style>
+
+.kontener {
+    display: table;
+    margin: auto;
+}
+
+.body {
+    display: table-cell;
+    vertical-align: middle;
+	width: 500px;
+	padding: 20px;
+	}
+
+	th, td {
+    padding: 3px;
+	padding-left: 10px;
+	text-align: left; 
+    vertical-align: middle;
+	}
+#table-polling-body > tr > td{
+    vertical-align: top;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+</style>
+  </head>
+  <body>
+<!-- Modal -->
+<div class="modal fade" id="gaadaWA" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel" id="headerintro">Sewa Zoom Pro</h5>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+        Nomor <i>Whatsapp</i> tidak ditemukan dalam data pelanggan kami.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-primary" id="btn1">Oke</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="konfirmasi" role="dialog" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel" id="headerintro">Konfirmasi</h5>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+        Apakah data yang anda isikan sudah benar?
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-secondary" id="btn1">Tidak</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary" id="btn2" onclick="submit()">Ya, Benar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="kontener">
+<div class="body">
+<h1 style="text-align:center">Promo Zoom ID</h1>
+  <h3 style="text-align:center">Customer Portal</h3>
+  <br>
+<div id="awal">
+<h4 style="text-align:center">List Polling</h4>
+
+<div class="text-center" id="loader">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden"></span>
+  </div>
+</div>
+<table class="table table bordered table-striped" style="margin-left:auto;margin-right:auto;display:none" id="tabel">
+  <thead>
+	<tr style="text-align:center">
+		<th>No.</th>
+		<th>Nama polling</th>
+		<th style="text-align:center"></th>
+	</tr>
+  </thead>
+  <tbody id="table-body">
+  
+  </tbody>
+  </table>
+  <br>
+<div align="center">
+  <div class="d-grid gap-2 col-6 mx-auto">
+    <button type="button" id="btnnewpoll" class="btn btn-primary" onclick="newpoll()">Tambah Polling</button>
+    <button type="button" id="btnback" class="btn btn-secondary" onclick="back()">Kembali</button>
+    <button id="loadback" class="btn btn-secondary" type="button" hidden disabled>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Processing...
+    </button>
+  </div>
+
+</div>
+</div>
+<div id="detailpolling" hidden>
+    <h4 style="text-align:center" class="editpoll" hidden>Detail Polling</h4>
+    <h4 style="text-align:center" class="newpoll">Buat Polling</h4>
+    <h6>Judul Polling</h6>
+    <input id="title" maxlength="255" type="text" class="form-control" placeholder="Judul Polling" onkeydown="myFunction(event,this)" onkeyup="myFunction2(event,this)"><br>
+    <input id="id-polling" maxlength="255" type="text" class="form-control" placeholder="id" hidden>
+    <table class="table table bordered" style="margin-left:auto;margin-right:auto" id="tabel-polling">
+        <tbody id="table-polling-body">
+            <tr><td colspan="2"></td></tr>
+            <tr class="question">
+                <td>1.</td>
+                <td>
+                    Pertanyaan
+                    <input id="q1-question" maxlength="255" type="text" class="form-control" placeholder="Pertanyaan" onkeyup="myFunction2(event,this)"><br>
+                    
+                    Tipe 
+                    <select id="q1-type" class="form-select" aria-label="Default select example">
+                        <option selected disabled value=0>-- Pilih Salah Satu --</option>
+                        <option value="single">Single Choice (hanya bisa memilih 1 jawaban)</option>
+                        <option value="multiple">Multiple Choice (dapat memilih lebih dari 1 jawaban)</option>
+                      </select><br>
+                    Pilihan Jawaban <span style="font-size:85%">(Minimal 2 pilihan)</span>
+                    <input id="q1-answer1" maxlength="255" type="text" class="form-control answer1" placeholder="Opsi 1 (Wajib)" onkeyup="myFunction2(event,this)" required>
+                    <input id="q1-answer2" maxlength="255" type="text" class="form-control answer1" placeholder="Opsi 2 (Wajib)" onkeyup="myFunction2(event,this)" required>
+                    <input id="q1-answer3" maxlength="255" type="text" class="form-control answer1" placeholder="Opsi 3" onkeyup="myFunction2(event,this)">
+                    <input id="q1-answer4" maxlength="255" type="text" class="form-control answer1" placeholder="Opsi 4" onkeyup="myFunction2(event,this)">
+                    <input id="q1-answer5" maxlength="255" type="text" class="form-control answer1" placeholder="Opsi 5" onkeyup="myFunction2(event,this)">
+                    <input id="q1-answer6" maxlength="255" type="text" class="form-control answer1" placeholder="Opsi 6" onkeyup="myFunction2(event,this)">
+                    <input id="q1-answer7" maxlength="255" type="text" class="form-control answer1" placeholder="Opsi 7" onkeyup="myFunction2(event,this)">
+                    <input id="q1-answer8" maxlength="255" type="text" class="form-control answer1" placeholder="Opsi 8" onkeyup="myFunction2(event,this)">
+                    <input id="q1-answer9" maxlength="255" type="text" class="form-control answer1" placeholder="Opsi 9" onkeyup="myFunction2(event,this)">
+                    <input id="q1-answer10" maxlength="255" type="text" class="form-control answer1" placeholder="Opsi 10" onkeyup="myFunction2(event,this)">
+                    
+                </td>
+            </tr>
+        </tbody>
+        </table>
+        <div align="center">
+        <a href="javascript:void()" onclick="tambah()">Tambah Pertanyaan</a><br><br>
+        <button type="button" id="btnbackdetail" class="btn btn-secondary" onclick="backdetail()">Kembali</button>
+        <button type="button" id="btnbuat" class="btn btn-primary" onclick="buatpolling()">Buat Polling</button>
+        <button type="button" id="btnsimpan" class="btn btn-primary" onclick="simpanpolling()" hidden>Simpan Polling</button>
+        <button id="btnload" class="btn btn-primary" type="button" disabled hidden>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Processing...
+        </button>
+    </div>
+</div>
+</div>
+</div>
+<script src="xmlToJson-master/xmlToJson.js"></script>
+<script src="js/polling.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", awal);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  </body>
+</html>
