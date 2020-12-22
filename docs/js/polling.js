@@ -21,7 +21,7 @@ param.push(sessionStorage.getItem("tipeasli"))
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=listpolling&data="+param, {
    'method' : 'get'}).then(function(response) {
     return response.text().then(function(hasil) {
-        console.log(JSON.parse(hasil))
+        //console.log(JSON.parse(hasil))
         data = JSON.parse(hasil)
         const{total_records,polls} = data
         var nomor = 0
@@ -97,14 +97,14 @@ document.querySelector("#btnsimpan").hidden = false
 document.querySelector("#btnbuat").hidden = true
 var index = apa.getAttribute("index")
 var polling = data.polls[index]
-console.log(polling)
+//console.log(polling)
 let html=''
 no = 0
 document.querySelector("#title").value = polling.title
 document.querySelector("#id-polling").value = polling.id
 polling.questions.forEach(questions =>{
     no++
-    console.log(questions,no)
+    //console.log(questions,no)
     let jawaban=''
     var li1 = `
             <tr><td colspan="2"></td></tr>
@@ -198,7 +198,6 @@ for (var i = 1;i<=no;i++){
       "answers": [
       ]
     }
-    console.log(".answer"+no)
     document.querySelectorAll(".answer"+i).forEach(answer =>{
         if (answer.value != ""){
             question["answers"].push(answer.value)
@@ -213,7 +212,7 @@ if (datajson["questions"]==""){
     document.querySelector("#btnbackdetail").disabled = false
     return
 }
-console.log(datajson)
+//console.log(datajson)
 kirim("add")
 }
 function simpanpolling(){
@@ -237,7 +236,7 @@ for (var i = 1;i<=no;i++){
       "answers": [
       ]
     }
-    console.log(".answer"+no)
+    //console.log(".answer"+no)
     document.querySelectorAll(".answer"+i).forEach(answer =>{
         if (answer.value != ""){
             question["answers"].push(answer.value)
@@ -249,7 +248,7 @@ if (datajson["questions"]==""){
     alert("Error : Polling harus berisi minimal 1 pertanyaan")
     return
 }
-console.log(datajson)
+//console.log(datajson)
 kirim(idpoling)
 }
 function kirim(pollid){
@@ -265,14 +264,14 @@ xhr.setRequestHeader("Content-Type", "application/json");
 
 xhr.onreadystatechange = function () {
    if (xhr.readyState === 4) {
-      console.log(xhr.status);
-      console.log(xhr.responseText);
+      //console.log(xhr.status);
+      //console.log(xhr.responseText);
       if(xhr.status == 204 && pollid != "add"){
         alert("Polling berhasil disimpan")
         location.reload()
       }
       try{
-        console.log(JSON.parse(xhr.responseText));
+        //console.log(JSON.parse(xhr.responseText));
         alert("Polling berhasil disimpan")
         location.reload()
       }
@@ -445,7 +444,7 @@ var toastElList = [].slice.call(document.querySelectorAll('.toast'))
         });
        toastList.forEach(toast => toast.show()); // This show them
    
-        console.log(toastList); // Testing to see if it works
+        //console.log(toastList); // Testing to see if it works
         }
 function refreshApp(newHtml) {
     document.open();
