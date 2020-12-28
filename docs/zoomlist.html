@@ -158,6 +158,10 @@ body.appendChild(row);
 })
 document.getElementById("loader").style.display = "none"
 document.getElementById("tabel").style.display = "table"})})
+.catch(function(error) {
+  alert("Terjadi Error saat mengirim/menerima data, silakan coba lagi")
+  location.href = localStorage.getItem("backup")
+})
 localStorage.setItem("index","ya")
 localStorage.removeItem("new")
 localStorage.removeItem("lihat")
@@ -208,8 +212,16 @@ fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMo
 	sessionStorage.setItem("agenda",e[3])
 	sessionStorage.setItem("lihat","Ya")
 	location.href = "zoomview.html"
-	})})
-	})})
+  })})
+  .catch(function(error) {
+  alert("Terjadi Error saat mengirim/menerima data, silakan coba lagi")
+  location.href = localStorage.getItem("backup")
+})
+  })})
+  .catch(function(error) {
+  alert("Terjadi Error saat mengirim/menerima data, silakan coba lagi")
+  location.href = localStorage.getItem("backup")
+})
 }
 function buat(apa){
 var tombol = document.getElementsByTagName("button")
@@ -274,12 +286,21 @@ fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMo
 	sessionStorage.setItem("topic",e[2])
 	sessionStorage.setItem("agenda",e[3])
 	sessionStorage.setItem("lihat","Ya")
-	location.href = "zoomview.html"})})}
+  location.href = "zoomview.html"})
+  .catch(function(error) {
+  alert("Terjadi Error saat mengirim/menerima data, silakan coba lagi")
+  location.href = localStorage.getItem("backup")
+})
+})}
 else{
 location.href = "zoom.html"
 }
 }
 })})
+.catch(function(error) {
+  alert("Terjadi Error saat mengirim/menerima data, silakan coba lagi")
+  location.href = localStorage.getItem("backup")
+})
 }
 function hasilWA(e){
 if ( e==null ){
