@@ -48,6 +48,23 @@
   top: 150%;
   
 }
+#waiting {
+  border: black 2px;
+}
+#waiting > #waiting-text{
+  opacity: 50%;
+  animation: animasi 2s infinite alternate;
+}
+@keyframes animasi{
+  0% {
+    opacity: 0%;
+    letter-spacing: 0px;
+  }
+  100% {
+    opacity: 100%;
+    letter-spacing: 1px;
+  }
+}
 </style>
   </head>
   <body>
@@ -129,6 +146,7 @@
           <h4 class="nominal">Rp50.000</h4>
         <br>
         Bayar sebelum<br><h5 class="deadline">15 Januari 2020 18:00</h5><br>
+        <div id="waiting" hidden><h5 id="waiting-text"><i>Menunggu Pembayaran...</i></h5></div>
         <div id="logo-bawah">
             Dapat di-<i>Scan</i> menggunakan :
             <img id="payment-merchant" width="100%" src="img/payment-logo-compiled.jpg"/><br>
@@ -137,7 +155,7 @@
         Serta Bank dan Dompet digital Lainnya yang terdaftar <a href="https://www.bi.go.id/id/sistem-pembayaran/informasi-perizinan/uang-elektronik/penyelenggara-berizin/Contents/Default.aspx" target="_blank">disini.</a>
         <br><br>
         <div align="center">
-            <button type="button" download="test.png" id="btnsavepng" class="btn btn-primary" style="display : block;" onclick="saveQRIS()">Download QR Code
+            <button type="button" download="test.png" id="btnsavepng" class="btn btn-primary" style="display : block;" onclick="saveQRIS()" disabled>Download QR Code
             </button>
             <button type="button"id="loadbtnsavepng" class="btn btn-primary" style="display : none;"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" disabled></span>Downloading</button>
             <br>

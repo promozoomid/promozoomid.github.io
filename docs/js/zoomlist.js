@@ -1,5 +1,5 @@
 const mode="live"
-const QRISready = false
+const QRISready = true
 var lempar
 
 sessionStorage.setItem("Versi","4")

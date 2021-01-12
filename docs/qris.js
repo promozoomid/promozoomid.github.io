@@ -63,6 +63,8 @@ fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMo
                 document.querySelector("#hasiljadi").append(canvas)
                 getCanvas = canvas
             });
+            document.querySelector("#waiting").removeAttribute("hidden")
+            document.querySelector("#btnsavepng").removeAttribute("disabled")
         }
     })})
     /*.catch(function(error){
@@ -90,25 +92,32 @@ var xhr = new XMLHttpRequest();
 xhr.open("GET", url);
 
 xhr.onreadystatechange = function () {
-
+  console.log(xhr.readyState+" "+xhr.status)
    if (xhr.readyState === 4) {
       mode==="live"?lempar=0:console.log(xhr.status);
       mode==="live"?lempar=0:console.log(xhr.responseText);
-      var respon = JSON.parse(xhr.responseText)
-      if (respon.status == "INACTIVE"){
-          document.querySelector("#transaction_id").innerHTML = respon.id.toUpperCase();
-          document.querySelector("#bayar").hidden = true
-          document.querySelector("#sudahbayar").hidden = false
-          clearInterval(loopbayar);
-          setTimeout(lunas,5000)
-      }
-      else if (respon.status =="404"){
+      try{
+        var respon = JSON.parse(xhr.responseText)
+        if (respon.status == "INACTIVE"){
+            document.querySelector("#transaction_id").innerHTML = respon.id.toUpperCase();
             document.querySelector("#bayar").hidden = true
-            document.querySelector("#qrexpired").hidden = false
-            qrexpired()
+            document.querySelector("#sudahbayar").hidden = false
             clearInterval(loopbayar);
+            setTimeout(lunas,5000)
         }
-      else {}
+        else if (respon.status =="404"){
+              document.querySelector("#bayar").hidden = true
+              document.querySelector("#qrexpired").hidden = false
+              qrexpired()
+              clearInterval(loopbayar);
+          }
+        }
+      catch {
+        const tulisan = document.getElementById("waiting")
+        tulisan.removeAttribute("id")
+        tulisan.querySelector("h5").innerHTML = "<i>Error, Silahkan muat ulang halaman ini (Refresh)</i>"
+        clearInterval(loopbayar);
+      }
    }};
 
 xhr.send();
@@ -149,7 +158,6 @@ xhr.onreadystatechange = function () {
         // size in pixels
         size: 300,
       });
-      document.querySelector("#QRIS").src = document.querySelector("#divqris").querySelector("img").src
       inputQR(id_trx,respon.qr_string,expired)
    }};
 
@@ -171,9 +179,13 @@ function inputQR(id_trx,qr,expired){
   'method' : 'get'}).then(function(response) {
     return response.text().then(function(text) {
         mode==="live"?lempar=0:console.log(text)
-        document.querySelector("#loading").hidden = true
-        document.querySelector("#awal").hidden = true
-        document.querySelector("#bayar").hidden = false
+        document.querySelector("#QRIS").src = document.querySelector("#divqris").querySelector("img").src
+        html2canvas(document.querySelector("#qris-template")).then(canvas => {
+          document.querySelector("#hasiljadi").append(canvas)
+          getCanvas = canvas
+        });
+        document.querySelector("#waiting").removeAttribute("hidden")
+        document.querySelector("#btnsavepng").removeAttribute("disabled")
         sudahbayar()
     })})
 }
