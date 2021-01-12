@@ -132,7 +132,15 @@
 		500
 		</label>
 	</div>
-	</td>
+  </td>
+  <td>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="hostkey" id="host500" onclick="pilihHost()">
+      <label class="form-check-label" for="host500">
+      500
+      </label>
+    </div>
+    </td>
 </tr>
 </table>
 <div id="dapethost" style="display:none">
@@ -209,7 +217,15 @@ Harian
 		500
 		</label>
 	</div>
-	</td>
+  </td>
+  <td>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="tipe" id="gladi" onclick="pilihan()">
+      <label class="form-check-label" for="gladi">
+      Gladi
+      </label>
+    </div>
+    </td>
 </tr>
 </table><br>
 <h6>Akun Zoom</h6>
@@ -266,21 +282,31 @@ function durasi(){
   if(document.querySelector("#harian").checked){
     document.querySelector("#durasi").type = "text"
     document.querySelector("#durasi").value = "H"
-    document.querySelector("#durasi").readonly = true
+    document.querySelector("#durasi").setAttribute("disabled",true)
   }
   else {
     document.querySelector("#durasi").type = "number"
     document.querySelector("#durasi").value = ""
-    document.querySelector("#durasi").readonly = false
+    document.querySelector("#durasi").removeAttribute("disabled")
   }
 }
 function cektgl(){
   alert(document.getElementById("tgl").value)
 }
 function pilihan() {
+  document.querySelector("#durasi").type = "number"
+  document.querySelector("#durasi").removeAttribute("disabled")
+  document.querySelector("#harian").removeAttribute("disabled")
 if (document.getElementById("100").checked){sessionStorage.setItem("tipe","100")}
 else if (document.getElementById("300").checked){sessionStorage.setItem("tipe","300")}
-else {sessionStorage.setItem("tipe","500")}
+else if (document.getElementById("500").checked){sessionStorage.setItem("tipe","500")}
+else {
+  sessionStorage.setItem("tipe","Gladi")
+  document.querySelector("#durasi").type = "text"
+  document.querySelector("#durasi").value = "G"
+  document.querySelector("#durasi").setAttribute("disabled",true)
+  document.querySelector("#harian").setAttribute("disabled",true)
+}
 }
 function pilihan2(){
 if (document.getElementById("zoom100").checked){sessionStorage.setItem("tipeasli","100")}
@@ -307,8 +333,7 @@ var tipe = sessionStorage.getItem("tipe")
 var tgl = document.getElementById("tgl").value
 var jam = document.getElementById("jam").value.toString()
 var durasi = document.getElementById("durasi").value
-if (durasi != "H"){durasi = parseInt(durasi)}
-
+console.log(durasi)
 var tipeasli = sessionStorage.getItem("tipeasli")
 var param = [wa, tipe, tgl,jam,durasi, tipeasli]
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=newCustomer&data="+param, {

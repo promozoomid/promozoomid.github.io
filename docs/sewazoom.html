@@ -48,7 +48,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-primary" id="btn1" onclick="location.href='https://promozoomid.github.io'">Oke</button>
+        <button type="button" data-dismiss="modal" class="btn btn-primary" id="btn1" onclick="window.location.href='https://promozoomid.github.io'">Oke</button>
       </div>
     </div>
   </div>
@@ -73,8 +73,92 @@ var getUrlParameter = function getUrlParameter(sParam) {
 };
 var param = getUrlParameter('customer');
 localStorage.setItem("wa",param)
-fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=test&data="+param, {
-   'method' : 'get'}).then(function(response) {
+var xhr1 = new XMLHttpRequest();
+xhr1.open("GET", "https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=test&data="+param);
+
+xhr1.onreadystatechange = function () {
+   if (xhr1.readyState === 4) {
+     if (xhr1.status === 200) {
+      const hasil = xhr1.responseText;
+      text = hasil.split("|") 
+	if ( text=="Gaada"){
+  var myModal = new bootstrap.Modal(document.getElementById("gaadaWA"), {backdrop:'static',keyboard:false});
+    myModal.show();
+}
+else if( text.length > 1){
+var tgl = new Date()
+tgl.setDate(tgl.getDate() + 1)
+localStorage.setItem("expired",tgl.getTime())
+localStorage.setItem("hasil",hasil)
+location.href = "zoomlist.html"
+}
+else{
+text = hasil.split(",")
+sessionStorage.setItem("ID",text[0])
+sessionStorage.setItem("tgl",text[2])
+sessionStorage.setItem("jam",text[3])
+sessionStorage.setItem("durasi",text[4])
+sessionStorage.setItem("IDmeeting",text[5])
+sessionStorage.setItem("tipe",text[6])
+sessionStorage.setItem("pengundang",text[7])
+sessionStorage.setItem("streamingurl",text[9])
+sessionStorage.setItem("streamingkey",text[10])
+sessionStorage.setItem("streamingpage",text[11])
+sessionStorage.setItem("status",text[12])
+sessionStorage.setItem("tipeasli",text[13])
+if ( text[14] != null){
+	sessionStorage.setItem("tgltrial",text[14])
+	sessionStorage.setItem("jamtrial",text[15])
+}
+sessionStorage.setItem("new","ya")
+if (text[5] != "" && text[5] != "BELUM BAYAR") {
+var param = [text[5],text[13]]
+var xhr2 = new XMLHttpRequest();
+xhr2.open("GET", "https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getUrl&data="+param);
+
+xhr2.onreadystatechange = function () {
+   if (xhr2.readyState === 4) {
+    if (xhr2.status === 200) {
+      const e = xhr2.responseText.split("|")
+      sessionStorage.setItem("url",e[0])
+      if (e[1] == "undefined"){e[1]=""}
+      sessionStorage.setItem("password",e[1])
+      sessionStorage.setItem("topic",e[2])
+      sessionStorage.setItem("agenda",e[3])
+      localStorage.setItem("lihat","Ya")
+      location.href = "zoomview.html"
+      var tgl = new Date()
+      tgl.setDate(tgl.getDate() + 1)
+      localStorage.setItem("expired",tgl.getTime())
+    }
+    else {
+      alert("Terjadi Error saat mengirim/menerima data, sepertinya perangkat anda tidak terhubung dengan internet. Silakan coba lagi" + xhr2.response)
+      document.querySelector("#pesan").innerHTML = "Error... Silahkan Muat Ulang Halaman Ini"}
+   }};
+
+xhr2.send();
+}
+else{
+var tgl2 = new Date(text[2].split("-")[0],text[2].split("-")[1],text[2].split("-")[2],text[3].split(":")[0],text[3].split(":")[1])
+var tgl = new Date()
+tgl.setDate(tgl.getDate() + 1)
+localStorage.setItem("expired",tgl.getTime())
+if (text[5] == "BELUM BAYAR"){window.location.href = "zoomlist.html"}
+else{
+localStorage.setItem("new","ya")
+window.location.href = "zoom.html"}
+}
+}
+   }
+   else {alert("Terjadi Error saat mengirim/menerima data, sepertinya perangkat anda tidak terhubung dengan internet. Silakan coba lagi")
+      document.querySelector("#pesan").innerHTML = "Error... Silahkan Muat Ulang Halaman Ini"}
+  }
+  };
+
+xhr1.send()
+
+/*fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=test&data="+param, {
+   'method' : 'get'}).then(handleErrors).then(function(response) {
     return response.text().then(function(hasil) {
 	text = hasil.split("|") 
 	if ( text=="Gaada"){
@@ -107,7 +191,7 @@ if ( text[14] != null){
 	sessionStorage.setItem("jamtrial",text[15])
 }
 sessionStorage.setItem("new","ya")
-if (text[5] != "" && text[5] != "QRIS") {
+if (text[5] != "" && text[5] != "BELUM BAYAR") {
 var param = [text[5],text[13]]
 fetch("https://script.google.com/macros/s/AKfycbzseDMVrvnQwkFMuMVj4TxF8QyBxbgwMolnIF3UtQ/exec?action=getUrl&data="+param, {
   'method' : 'get'}).then(function(response) {
@@ -132,17 +216,23 @@ var tgl2 = new Date(text[2].split("-")[0],text[2].split("-")[1],text[2].split("-
 var tgl = new Date()
 tgl.setDate(tgl.getDate() + 1)
 localStorage.setItem("expired",tgl.getTime())
-if (text[5] == "QRIS"){location.replace("qris.html")}
+if (text[5] == "BELUM BAYAR"){window.location.href = "zoomlist.html"}
 else{
 localStorage.setItem("new","ya")
-location.replace("zoom.html")}
+window.location.href = "zoom.html"}
 }
 }
 })})
-.catch(function(error) {
-  alert("Terjadi Error saat mengirim/menerima data, silakan coba lagi")
-  document.querySelector("#pesan").innerHTML = "Error... Silahkan Muat Ulang Halaman Ini"
-})
+.catch(err => {
+  if (err != "") {
+    alert("Terjadi Error saat mengirim/menerima data, silakan coba lagi 1" + err)
+    document.querySelector("#pesan").innerHTML = "Error... Silahkan Muat Ulang Halaman Ini"
+  }
+})*/
+function handleErrors(res) {
+  if (!res.ok) throw new Error(res.error);
+  return res;
+}
   </script><script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>

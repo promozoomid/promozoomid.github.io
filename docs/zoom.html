@@ -119,6 +119,8 @@
 	</div><br>
   </div>
 </div>
+<h5 id="gladi-text" hidden style="text-align:center"><i>Zoom Free Trial / Gladi</i></h5>
+<div id="participant" hidden>
 <h6>Pilihan Kapasitas <i>(Participants)</i></h6>
 <table>
 <tr><td>
@@ -145,7 +147,9 @@
 	</div>
 	</td>
 </tr>
-</table><br>
+</table>
+</div>
+<br>
 <h6>Nama Pembuat Meeting</h6>
 <input id="pengundang" type="text" class="form-control" placeholder="Contoh : Zoom" onkeydown="myFunction(event,this)" onkeyup="myFunction2(event,this)" value="Zoom"><div style="font-size:85%"><i>"<span id="tekspengundang">Zoom</span> is inviting you to a scheduled Zoom meeting..."</i></div><br>
 <h6>Judul Meeting/Acara<i>(Topic)</i></h6>
@@ -176,7 +180,13 @@ document.getElementById("tgl").value = sessionStorage.getItem("tgl")
 document.getElementById("jam").value = sessionStorage.getItem("jam")
 document.getElementById("durasi").value = sessionStorage.getItem("durasi")
 var tipe = sessionStorage.getItem("tipe")
-document.getElementById(tipe).checked = true
+if (tipe=="Gladi"){
+  document.getElementById("gladi-text").removeAttribute("hidden")
+}
+else {
+  document.getElementById("participant").removeAttribute("hidden")
+  document.getElementById(tipe).checked = true
+}
 sessionStorage.removeItem("new")
 }
 else {back()}
