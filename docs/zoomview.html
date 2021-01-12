@@ -342,7 +342,7 @@ document.getElementById("tekspengundang").innerHTML = document.getElementById("p
 var reserv = new Date(tanggal[0],parseInt(tanggal[1])-1,tanggal[2],hour,min)
 var reserv2 = new Date(now.getFullYear(),now.getMonth(),now.getDate(),hournow,minnow)
 
-if (sessionStorage.getItem("tgltrial") != null){
+/* if (sessionStorage.getItem("tgltrial") != null){
 var tgl = sessionStorage.getItem("tgltrial").split("-")
 var jam = sessionStorage.getItem("jamtrial").split(":")
 var trial = new Date(tgl[0],parseInt(tgl[1])-1,tgl[2],jam[0],jam[1])
@@ -351,7 +351,8 @@ reserv = trial
 }
 document.getElementById("tgltrial").innerHTML = trial.getDate()+" "+bulan[parseInt(trial.getMonth())]+" "+trial.getFullYear()+"  "+("0" + trial.getHours()).slice(-2)+":"+("0" + trial.getMinutes()).slice(-2)
 document.getElementById("trial").style.display = "block"
-}
+} */
+
 var n = reserv.getTime() - reserv2.getTime()
 if ( n <= 900000 ) {
 document.getElementById("btnhostkey").disabled = false
