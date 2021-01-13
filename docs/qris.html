@@ -55,6 +55,35 @@
   opacity: 50%;
   animation: animasi 2s infinite alternate;
 }
+.logo-sukses{
+  width: 30%;
+  min-width: 100px;
+  animation: breathing 3s ease-out infinite alternate;
+}
+@-webkit-keyframes breathing {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0.7);
+    transform: scale(0.7);
+  }
+}
+
+@keyframes breathing {
+  0% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    transform: scale(0.7);
+  }
+}
+
 @keyframes animasi{
   0% {
     opacity: 0%;
@@ -167,12 +196,12 @@
         <br>
         <h3>Pembayaran Berhasil</h3>
         <br>
-        <img style="width:30%;min-width: 100px" src="img/checked.png"/><br>
+        <img class="logo-sukses" src="img/checked.png"/><br>
         <br>
         <h4 class="nominal">Rp50.000</h4>
         <span id="transaction_id"></span><br>
         <br>
-        <i>Mengalihkan dalam 5 detik kedepan, mohon tunggu...</i>
+        <button type="button"id="btnsuksesbayar" class="btn btn-primary">Kembali ke Customer Portal</button>
     </div>
     <div id="qrexpired" hidden>
         <br>

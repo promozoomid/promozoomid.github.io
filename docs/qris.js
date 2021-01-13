@@ -83,7 +83,7 @@ function saveQRIS(){
   document.getElementById("btnsavepng").style.display = "block"
 }
 function sudahbayar(){
-  loopbayar = setInterval(sudahbayar1,10000)
+  loopbayar = setInterval(sudahbayar1,15000)
 }
 function sudahbayar1(){
 var url = "https://secure-stream-96180.herokuapp.com/status/"+id_trx+"/";
@@ -92,7 +92,6 @@ var xhr = new XMLHttpRequest();
 xhr.open("GET", url);
 
 xhr.onreadystatechange = function () {
-  console.log(xhr.readyState+" "+xhr.status)
    if (xhr.readyState === 4) {
       mode==="live"?lempar=0:console.log(xhr.status);
       mode==="live"?lempar=0:console.log(xhr.responseText);
@@ -103,7 +102,7 @@ xhr.onreadystatechange = function () {
             document.querySelector("#bayar").hidden = true
             document.querySelector("#sudahbayar").hidden = false
             clearInterval(loopbayar);
-            setTimeout(lunas,5000)
+            document.getElementById("btnsuksesbayar").removeAttribute("disabled")
         }
         else if (respon.status =="404"){
               document.querySelector("#bayar").hidden = true
@@ -119,7 +118,6 @@ xhr.onreadystatechange = function () {
         clearInterval(loopbayar);
       }
    }};
-
 xhr.send();
 }
 }
@@ -217,3 +215,6 @@ function numberWithCommas(x) {
 function balikin(){
   location.href=localStorage.getItem("backup")
 }
+document.getElementById("btnsuksesbayar").addEventListener("click", function (){
+  location.href = localStorage.getItem("backup")
+})

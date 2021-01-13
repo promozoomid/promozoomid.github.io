@@ -1847,7 +1847,7 @@ h6 {
   color: #777777; }
 
 .ordered-list-alpha li {
-  margin-left: 30px;
+  margin-left: 0;
   list-style-type: lower-alpha;
   color: #f8b600;
   font-weight: 500;
@@ -1858,7 +1858,7 @@ h6 {
   color: #777777; }
 
 .ordered-list-roman li {
-  margin-left: 30px;
+  margin-left: 0;
   list-style-type: lower-roman;
   color: #f8b600;
   font-weight: 500;
